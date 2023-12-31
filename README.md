@@ -1,6 +1,6 @@
 This is the code for Everything Hair Salon website.
 
-1. [x] Create jetstream project mj,bhk.j
+1. [x] Create jetstream project
 2. [x] Dynamic hero
 3. [x] Realtime validation for all components
 4. [x] Lazy image loading on hero
