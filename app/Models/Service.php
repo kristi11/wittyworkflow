@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property mixed $estimated_hours
  * @property mixed $estimated_minutes
+ * @method static get(string $string)
  */
 class Service extends Model
 {
