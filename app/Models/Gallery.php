@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property mixed $description
  * @property mixed $path
+ * @method static make()
+ * @method static find($galleryId)
  */
 class Gallery extends Model
 {
