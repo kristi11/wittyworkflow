@@ -8,7 +8,7 @@
                 <ul>
                     <li>
 {{--                        <livewire:gallery.gallery-image :gallery="$gallery" lazy="true"/>--}}
-                        <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="mb-4 object-cover rounded-lg">
+                        <img src="{{ Storage::disk('s3-public')->url($gallery->path) }}" alt="Service images" class="mb-4 object-cover rounded-lg">
                     </li>
 
                     <li>
