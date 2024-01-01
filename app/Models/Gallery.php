@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property mixed $description
+ * @property mixed $path
  */
 class Gallery extends Model
 {
