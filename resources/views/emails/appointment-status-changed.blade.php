@@ -32,11 +32,11 @@ The appointment is {!! ucwords($appointment->appointment_status). '. If you have
 </x-mail::panel>
 
 Please leave us a review on GOOGLE or YELP.
-<x-mail::button :url="'https://maps.app.goo.gl/v683u4wSmHy1oxTB9'">
+<x-mail::button :url="''">
     GOOGLE reviews
 </x-mail::button>
 
-<x-mail::button :url="'https://www.yelp.com/biz/everything-hair-salon-middle-village'">
+<x-mail::button :url="''">
     YELP reviews
 </x-mail::button>
 
