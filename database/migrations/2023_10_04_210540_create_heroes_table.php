@@ -17,11 +17,11 @@ return new class extends Migration {
             $table->string('mainQuote')->default('Main quote goes here');
             $table->string('secondaryQuote')->nullable()->default('Second quote goes here');
             $table->string('thirdQuote')->nullable()->default('Third quote goes here');
-            $table->tinyInteger('gradientDegree')->default('90');
+            $table->integer('gradientDegree')->default('90');
             $table->string('gradientFirstColor')->default('#d53369');
-            $table->tinyInteger('gradientDegreeStart')->default('0');
+            $table->integer('gradientDegreeStart')->default('0');
             $table->string('gradientSecondColor')->default('#daae51');
-            $table->tinyInteger('gradientDegreeEnd')->default('100');
+            $table->integer('gradientDegreeEnd')->default('100');
             $table->string('image')->nullable();
             $table->boolean('waves')->default(false);
             $table->timestamps();
