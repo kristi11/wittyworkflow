@@ -40,20 +40,20 @@
 {{--                    </li>--}}
 {{--                </ul>--}}
 {{--            </div>--}}
-{{--            <div class="flex-1">--}}
-{{--                <p class="uppercase text-gray-500 md:mb-6">Social</p>--}}
-{{--                <ul class="list-reset mb-6">--}}
-{{--                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">--}}
-{{--                        <a href="#" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Facebook</a>--}}
-{{--                    </li>--}}
-{{--                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">--}}
-{{--                        <a href="#" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Linkedin</a>--}}
-{{--                    </li>--}}
-{{--                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">--}}
-{{--                        <a href="#" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Twitter</a>--}}
-{{--                    </li>--}}
-{{--                </ul>--}}
-{{--            </div>--}}
+            <div class="flex-1">
+                <p class="uppercase text-gray-500 md:mb-6">Social</p>
+                <ul class="list-reset mb-6">
+                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                        <a href="https://github.com/kristi11" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Github</a>
+                    </li>
+                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                        <a href="https://www.linkedin.com/in/kristi-tanellari/" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Linkedin</a>
+                    </li>
+                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                        <a href="https://twitter.com/TanellariKristi" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Twitter</a>
+                    </li>
+                </ul>
+            </div>
             {{--            <div class="flex-1">--}}
             {{--                <p class="uppercase text-gray-500 md:mb-6">Company</p>--}}
             {{--                <ul class="list-reset mb-6">--}}
