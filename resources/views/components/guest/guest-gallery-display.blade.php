@@ -14,7 +14,7 @@
         <x-slot name="content">
             <ul>
                 <li>
-                    @if($gallery->path && $gallery->path != 'services.jpg')
+                    @if($gallery->path && $gallery->path !== 'services.jpg')
                         <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="mb-4 object-cover rounded-lg">
                         @else
                         <img src="{{ asset('services.jpg') }}" alt="Service images" class="mb-4 object-cover rounded-lg">
