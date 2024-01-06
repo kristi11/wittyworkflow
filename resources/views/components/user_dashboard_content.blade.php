@@ -126,7 +126,14 @@
 
         <p class="flex gap-1 leading-relaxed mt-4 text-gray-500 text-sm">
             @forelse($galleries as $gallery)
-                <img class="h-8 w-8 object-cover rounded-full" src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="{{ $gallery->path }}">
+                @if($gallery->path)
+                    @if($gallery->path !== 'services.jpg')
+                        <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="h-8 w-8 object-cover rounded-full">
+                    @else
+                        <img src="{{ Storage::disk('serviceImages')->url('serviceImages/services.jpg') }}" alt="Service images" class="h-8 w-8 object-cover rounded-full">
+                    @endif
+                @endif
+{{--                <img class="h-8 w-8 object-cover rounded-full" src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="{{ $gallery->path }}">--}}
             @empty
                 {{ 'This business hasn\'t uploaded any images' }}
             @endforelse
