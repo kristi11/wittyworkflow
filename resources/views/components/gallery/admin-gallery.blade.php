@@ -50,7 +50,13 @@
                         </td>
                         <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
                             <a href="#" wire:click="expandImage({{ $gallery->id }})">
-                                <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="h-8 object-cover rounded-full w-8">
+                                @if($gallery->path)
+                                    @if($gallery->path !== 'services.jpg')
+                                        <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="mb-4 object-cover rounded-lg">
+                                    @else
+                                        <img src="{{ Storage::disk('serviceImages')->url('serviceImages/services.jpg') }}" alt="Service images" class="mb-4 object-cover rounded-lg">
+                                    @endif
+                                @endif
                             </a>
                         </td>
                         <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
