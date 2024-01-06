@@ -9,7 +9,11 @@
                     <li>
 {{--                        <livewire:gallery.gallery-image :gallery="$gallery" lazy="true"/>--}}
                         @if($gallery->path)
-                        <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="mb-4 object-cover rounded-lg">
+                            @if($gallery->path !== 'services.jpg')
+                                <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="mb-4 mt-4 rounded-lg shadow-md">
+                            @else
+                                <img src="{{ Storage::disk('serviceImages')->url('serviceImages/services.jpg') }}" alt="Service images" class="mb-4 mt-4 rounded-lg shadow-md">
+                            @endif
                         @endif
                     </li>
 
