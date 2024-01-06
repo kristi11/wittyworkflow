@@ -34,7 +34,13 @@
             <div class="bg-white md:col-span-1 md:mt-0 mt-5 p-3 rounded-lg shadow-lg dark:bg-gray-800">
                 <div class="flex justify-center">
 {{--                    <livewire:gallery.gallery-image :gallery="$gallery" lazy="true"/>--}}
-                    <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="mb-4 object-cover rounded-lg max-h-60">
+                    @if($gallery->path)
+                        @if($gallery->path !== 'services.jpg')
+                            <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="mb-4 mt-4 rounded-lg shadow-md">
+                        @else
+                            <img src="{{ Storage::disk('serviceImages')->url('serviceImages/services.jpg') }}" alt="Service images" class="mb-4 mt-4 rounded-lg shadow-md">
+                        @endif
+                    @endif
                 </div>
                 <div class="flex justify-center">
                     <x-button wire:click="expandImage({{ $gallery->id }})">
