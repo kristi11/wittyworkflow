@@ -30,9 +30,9 @@
                         <div>
                             @if($gallery->path)
                                 @if($gallery->path !== 'services.jpg')
-                                    <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="h-8 object-cover rounded-full w-8">
+                                    <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="mb-4 mt-4 rounded-lg shadow-md">
                                 @else
-                                    <img src="{{ Storage::disk('serviceImages')->url('serviceImages/services.jpg') }}" alt="Service images" class="h-8 object-cover rounded-full w-8">
+                                    <img src="{{ Storage::disk('serviceImages')->url('serviceImages/services.jpg') }}" alt="Service images" class="mb-4 mt-4 rounded-lg shadow-md">
                                 @endif
                             @endif
                         </div>
