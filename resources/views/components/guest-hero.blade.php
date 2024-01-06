@@ -24,7 +24,7 @@
 {{--                <img src="{{ asset('hero-1.png') }}" alt="Business Image" class="mb-4 mt-4 w-1/4 rounded-lg">--}}
 {{--                @endif--}}
 
-                @if($hero->image != 'hero-1.png')
+                @if($hero->image != 'business-hero.jpg')
                     <div class="flex justify-evenly md:w-3/5 pb-16 py-6 text-center w-full">
                         <livewire:hero-image :hero="$hero" lazy="true"/>
                     </div>
