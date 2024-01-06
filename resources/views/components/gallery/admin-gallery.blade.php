@@ -28,8 +28,12 @@
 
                     <x-slot name="content">
                         <div>
-                            @if ($gallery->path)
-                                <img id="path" src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Gallery Image" class="mb-4 mt-4 rounded-lg shadow-md">
+                            @if($gallery->path)
+                                @if($gallery->path !== 'services.jpg')
+                                    <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="h-8 object-cover rounded-full w-8">
+                                @else
+                                    <img src="{{ Storage::disk('serviceImages')->url('serviceImages/services.jpg') }}" alt="Service images" class="h-8 object-cover rounded-full w-8">
+                                @endif
                             @endif
                         </div>
                     </x-slot>
@@ -50,7 +54,6 @@
                         </td>
                         <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
                             <a href="#" wire:click="expandImage({{ $gallery->id }})">
-
                                 @if($gallery->path)
                                     @if($gallery->path !== 'services.jpg')
                                         <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="h-8 object-cover rounded-full w-8">
