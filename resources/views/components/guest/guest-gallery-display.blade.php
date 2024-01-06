@@ -16,7 +16,7 @@
                 <li>
                     @if($gallery->path && $gallery->path != 'services.jpg')
                         <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="mb-4 object-cover rounded-lg">
-                        else
+                        @else
                         <img src="{{ asset('services.jpg') }}" alt="Service images" class="mb-4 object-cover rounded-lg">
                     @endif
                 </li>
