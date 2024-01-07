@@ -30,7 +30,7 @@
                     </div>
                 @else
                     <div class="flex justify-evenly md:w-3/5 pb-16 py-6 text-center w-full">
-                        <img src="{{ asset('business-hero.jpg') }}" alt="Business Image" class="mb-4 mt-4 w-1/4 rounded-lg">
+                        <img src="{{ asset('business-hero.jpg') }}" alt="Business Image" class="mb-4 mt-4 rounded-lg">
                     </div>
                 @endif
     </div>
