@@ -20,7 +20,7 @@
 
     </div>
 
-    <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 p-6 lg:p-8">
+    <div class="bg-opacity-25 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 p-6 lg:p-8">
         <x-admin-dashboard-content :users="$users" :address="$address" :services="$services" :businessHours="$businessHours" :appointments="$appointments" :galleries="$galleries" :socials="$socials" :seo="$seo"/>
         <x-user_dashboard_content :address="$address" :services="$services" :businessHours="$businessHours" :userAppointments="$userAppointments" :galleries="$galleries" :socials="$socials"/>
     </div>
