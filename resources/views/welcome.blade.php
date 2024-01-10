@@ -10,7 +10,7 @@
     <body class="leading-normal tracking-normal text-white gradient" style="font-family: 'Source Sans Pro', sans-serif;">
     <x-banner/>
         <livewire:guest-content/>
-        <x-guest-footer/>
+        <x-guest-footer :social="$social"/>
         <x-js-scripts/>
     @livewireScripts
     </body>

@@ -17,7 +17,9 @@ use Illuminate\Validation\ValidationException;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home', [
+        'socials' => \App\Models\Social::first(),
+    ]);
 });
 
 Route::post('newsletter', NewsletterController::class);

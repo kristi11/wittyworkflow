@@ -29,15 +29,52 @@
                 <div class="flex-1">
                     <p class="uppercase text-gray-500 md:mb-6">Social</p>
                 <ul class="list-reset mb-6">
-                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                        <a href="https://github.com/kristi11" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Github</a>
-                    </li>
-                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                        <a href="https://www.linkedin.com/in/kristi-tanellari/" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Linkedin</a>
-                    </li>
-                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                        <a href="https://twitter.com/TanellariKristi" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Twitter</a>
-                    </li>
+
+
+                    @if($socials)
+                            <div class="col-span-6 sm:col-span-4">
+                                <h1 class="font-bold mb-8 text-2xl dark:text-gray-100">Your current socials</h1>
+
+                                @if(!empty($socials->instagram))
+                                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                                        <a href="{{ 'https://www.facebook.com/'.$socials->instagram }}" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Github</a>
+                                    </li>
+                                @endif
+
+                                @if(!empty($socials->facebook))
+                                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                                        <a href="{{ 'https://www.facebook.com/'.$socials->facebook }}" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Github</a>
+                                    </li>
+                                    <a target="_blank" class="flex font-mono hover:text-indigo-600 items-center mb-8 text-center dark:text-gray-200" href="{{ 'https://www.facebook.com/'.$socials->facebook }}">
+                                        <x-svg.facebook-s-v-g/>&nbsp{{$socials->facebook }}
+                                    </a>
+                                @endif
+
+                                @if(!empty($socials->twitter))
+                                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                                        <a href="{{ 'https://www.facebook.com/'.$socials->twitter }}" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Github</a>
+                                    </li>
+                                @endif
+
+                                @if(!empty($socials->linkedin))
+                                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                                        <a href="{{ 'https://www.facebook.com/'.$socials->linkedin }}" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Github</a>
+                                    </li>
+                                @endif
+                            </div>
+                    @endif
+
+
+
+{{--                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">--}}
+{{--                        <a href="https://github.com/kristi11" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Github</a>--}}
+{{--                    </li>--}}
+{{--                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">--}}
+{{--                        <a href="https://www.linkedin.com/in/kristi-tanellari/" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Linkedin</a>--}}
+{{--                    </li>--}}
+{{--                    <li class="mt-2 inline-block mr-2 md:block md:mr-0">--}}
+{{--                        <a href="https://twitter.com/TanellariKristi" class="no-underline hover:underline text-gray-800 hover:text-pink-500">Twitter</a>--}}
+{{--                    </li>--}}
                 </ul>
                 </div>
                 <div class="flex-1">
