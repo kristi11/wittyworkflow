@@ -15,7 +15,7 @@ class SeoFactory extends Factory
         return [
             'user_id' => '1',
             'title' => config('app.name'),
-            'description' => 'Description',
+            'description' => 'Boost your online presence with services, appointment management, a stunning gallery, and customizable features. Elevate your business effortlessly!',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

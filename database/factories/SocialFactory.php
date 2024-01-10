@@ -13,10 +13,11 @@ class SocialFactory extends Factory
     public function definition(): array
     {
         return [
-            'instagram' => $this->faker->word(),
-            'facebook' => $this->faker->word(),
-            'twitter' => $this->faker->word(),
-            'linkedin' => $this->faker->word(),
+            'user_id' => '1',
+            'instagram' => 'kristitanellari/',
+            'facebook' => 'kristi.tanellari1',
+            'twitter' => 'TanellariKristi',
+            'linkedin' => 'kristi-tanellari/',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

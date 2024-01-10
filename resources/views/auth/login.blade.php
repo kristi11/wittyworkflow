@@ -13,6 +13,17 @@
         @endif
 
         <form method="POST" action="{{ route('login') }}">
+            <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md mb-4 rounded-lg" role="alert">
+                <div class="flex">
+                    <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+                    <div>
+                        <p class="font-bold mb-4">To sign in to the admin dashboard</p>
+                        <p class="text-sm"><b>Email:</b> kristi@wittyworkflow.com</p>
+                        <p class="text-sm"><b>Password:</b> password</p>
+                        <p class="text-sm mt-4">or you can <a href="{{route('register')}}" class="text-indigo-600">create</a> a new customer account. The website's content undergoes a scheduled reset every 10 minutes, a deliberate measure taken to uphold the continuity of a standardized demonstration environment.</p>
+                    </div>
+                </div>
+            </div>
             @csrf
 
             <div>
