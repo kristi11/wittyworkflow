@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\NewsletterController;
+use App\Models\Social;
 use App\Services\Newsletter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
@@ -18,7 +19,7 @@ use Illuminate\Validation\ValidationException;
 
 Route::get('/', function () {
     return view('home', [
-        'socials' => \App\Models\Social::first(),
+        'socials' => Social::first(),
     ]);
 });
 
