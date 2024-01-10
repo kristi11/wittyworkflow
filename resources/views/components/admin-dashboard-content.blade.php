@@ -1,5 +1,5 @@
 @can('is_admin')
-    <div class="bg-indigo-50 dark:bg-gray-500 p-6 rounded-lg shadow-md">
+    <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
         <div class="flex items-center">
             <x-icons.users-icon/>
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -25,7 +25,7 @@
         </p>
     </div>
 
-    <div class="bg-indigo-50 dark:bg-gray-500 p-6 rounded-lg shadow-md">
+    <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
         <div class="flex items-center">
             <x-icons.appointments/>
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -51,7 +51,7 @@
         </p>
     </div>
 
-    <div class="bg-indigo-50 dark:bg-gray-500 p-6 rounded-lg shadow-md">
+    <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
         <div class="flex items-center">
             <x-icons.landingpage-hero/>
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -72,7 +72,7 @@
         </p>
     </div>
 
-    <div class="bg-indigo-50 dark:bg-gray-500 p-6 rounded-lg shadow-md">
+    <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
         <div class="flex items-center">
             <x-icons.dashboard-address/>
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -101,7 +101,7 @@
                 You haven't set your address yet.
             @endif
     </div>
-    <div class="bg-indigo-50 dark:bg-gray-500 p-6 rounded-lg shadow-md">
+    <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
         <div class="flex items-center">
             <x-icons.dashboard-services/>
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -134,7 +134,7 @@
             </p>
     </div>
 
-    <div class="bg-indigo-50 dark:bg-gray-500 p-6 rounded-lg shadow-md">
+    <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
         <div class="flex items-center">
             <x-icons.business-hours/>
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -164,7 +164,7 @@
         </p>
     </div>
 
-    <div class="bg-indigo-50 dark:bg-gray-500 p-6 rounded-lg shadow-md">
+    <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
         <div class="flex items-center">
             <x-icons.gallery/>
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -200,7 +200,7 @@
         </p>
     </div>
 
-    <div class="bg-indigo-50 dark:bg-gray-500 p-6 rounded-lg shadow-md">
+    <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
         <div class="flex items-center">
             <x-icons.social-networks/>
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -256,7 +256,7 @@
         </p>
     </div>
 
-    <div class="bg-indigo-50 dark:bg-gray-500 p-6 rounded-lg shadow-md">
+    <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
         <div class="flex items-center">
             <x-icons.s-e-o/>
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
