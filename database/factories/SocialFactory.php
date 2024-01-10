@@ -14,10 +14,10 @@ class SocialFactory extends Factory
     {
         return [
             'user_id' => '1',
-            'instagram' => 'kristitanellari/',
+            'instagram' => 'kristitanellari',
             'facebook' => 'kristi.tanellari1',
             'twitter' => 'TanellariKristi',
-            'linkedin' => 'kristi-tanellari/',
+            'linkedin' => 'kristi-tanellari',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
