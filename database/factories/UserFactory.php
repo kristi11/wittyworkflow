@@ -22,7 +22,7 @@ class UserFactory extends Factory
         return [
             'name' => 'Admin',
             'role' => 'admin',
-            'email' => 'admin@example.com',
+            'email' => 'kristi@wittyworkflow.com',
             'phone' => '123-456-7890',
             'password' => bcrypt('password'),
             'email_verified_at' => now(),

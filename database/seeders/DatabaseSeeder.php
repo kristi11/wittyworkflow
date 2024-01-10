@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Address;
+use App\Models\BusinessHour;
 use App\Models\Gallery;
 use App\Models\Hero;
 use App\Models\Seo;
@@ -24,5 +25,6 @@ class DatabaseSeeder extends Seeder
         Address::factory()->create();
         Gallery::factory()->count(6)->create();
         Seo::factory()->create();
+        BusinessHour::factory()->create();
     }
 }
