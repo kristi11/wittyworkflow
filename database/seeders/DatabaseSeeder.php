@@ -25,6 +25,6 @@ class DatabaseSeeder extends Seeder
         Address::factory()->create();
         Gallery::factory()->count(6)->create();
         Seo::factory()->create();
-        BusinessHour::factory()->create();
+        BusinessHour::factory()->count(7)->create();
     }
 }
