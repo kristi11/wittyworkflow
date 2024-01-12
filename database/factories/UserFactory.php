@@ -31,6 +31,18 @@ class UserFactory extends Factory
         ];
     }
 
+    // Define a state for the second row with different values
+    public function secondRow(): Factory|UserFactory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'name' => 'Staff',
+                'role' => 'staff',
+                'email' => 'staff@example.com',
+            ];
+        });
+    }
+
     /**
      * Indicate that the model's email address should be unverified.
      */

@@ -151,7 +151,7 @@
         <div class="flex items-center">
             <x-icons.social-networks/>
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
-                <a href="{{ route('gallery') }}">Social Networks</a>
+                <a href="{{ route('socials') }}">Social Networks</a>
             </h2>
 
         </div>

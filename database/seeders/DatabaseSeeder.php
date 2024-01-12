@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->withPersonalTeam()->create();
+        User::factory()->secondRow()->withPersonalTeam()->create(); // Creates the second row with different values
         Hero::factory()->create();
         Service::factory()->count(6)->create();
         Address::factory()->create();
