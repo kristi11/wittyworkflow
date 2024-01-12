@@ -38,13 +38,15 @@
                 {{ __('Appointments') }}
             </x-dropdown-link>
 
-            <x-dropdown-link href="{{ route('services') }}" wire:navigate>
-                {{ __('Services') }}
-            </x-dropdown-link>
+            @can('is_user')
+                <x-dropdown-link href="{{ route('services') }}" wire:navigate>
+                    {{ __('Services') }}
+                </x-dropdown-link>
 
-            <x-dropdown-link href="{{ route('gallery') }}" wire:navigate>
-                {{ __('Gallery') }}
-            </x-dropdown-link>
+                <x-dropdown-link href="{{ route('gallery') }}" wire:navigate>
+                    {{ __('Gallery') }}
+                </x-dropdown-link>
+            @endcan
 
             @can('is_admin')
                 <div class="border-t border-gray-200"></div>
