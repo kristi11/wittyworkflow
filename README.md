@@ -24,7 +24,7 @@
     A platform for managing your business
     <br />
     <br />
-    <a href="https://github.com/kristi11/wittyworkflow/">View Demo</a>
+    <a href="https://wittyworkflow.com/">View Demo</a>
     ·
     <a href="https://github.com/kristi11/wittyworkflow/issues">Report Bug</a>
     ·
