@@ -79,7 +79,7 @@
 
 * **Lazy Image Loading:** Optimize performance by incorporating lazy image loading, particularly beneficial in the hero section for faster page rendering.
 
-* **Responsive Menu with Wire:Navigate :** Enhance navigation with a responsive menu featuring wire:navigate functionality, bringing Single Page Application (SPA) functionality to your site for smooth transitions between links.
+* **SPA functionality with Wire:Navigate :** Enhance navigation with a SPA like menu featuring wire:navigate functionality, bringing Single Page Application (SPA) functionality to your site for smooth transitions between links.
 
 * **Laravel Jetstream Authentication:** Benefit from Laravel Jetstream authentication, including features like 2-factor authentication and browser session control. Profile information updating has been disabled for demonstration purposes but can be enabled through fortify.php with the desired features.
 
@@ -91,14 +91,14 @@
 
 * **Email Notifications on Appointment Changes:** Receive email notifications for changes in appointments, ensuring you never miss valuable information about your upcoming appointments.
 
-* **Newsletter Creation:** Planned feature (Not yet started): Develop a newsletter system to keep users informed and engaged with your platform.
+* **Newsletter Creation:** Planned feature (Not yet finished): Develop a newsletter system to keep users informed and engaged with your platform.
 
 * **Progressive Web App (PWA):** Planned feature (Not yet started): Transform the web app into a Progressive Web App, providing users with an enhanced offline experience and improved accessibility.
 
 * **Jetstream Configuration (jetstream.php):** Customize Jetstream features by editing the jetstream.php configuration file. Enable the desired features according to your project requirements.
 
 ## About Wittyworkflow:
-Wittyworkflow is designed to empower businesses through a comprehensive suite of features, combining dynamic visual elements with secure and efficient management tools. The roadmap reflects our commitment to continuous improvement and innovation. Join us on this journey as we work towards creating a platform that simplifies business operations and fosters growth.
+Wittyworkflow is designed to empower businesses through a comprehensive suite of features, combining dynamic visual elements with secure and efficient management tools. The roadmap reflects the commitment to continuous improvement and innovation. Join up on this journey as we work towards creating a platform that simplifies business operations and fosters growth.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -202,7 +202,7 @@ To clean up the `tmp` files uploaded on `S3` every 24 hours add the following co
 php artisan livewire:configure-s3-upload-cleanup
 ```
 
-For help setting up [Amazon s3](https://aws.amazon.com/s3/) you can check out this [tutorial](https://laracasts.com/series/multitenancy-in-practice/episodes/7) by Kevin McKee, a laracasts instructor. This is a paid tutorial but it's worth it. I learned a lot from it. And no I'm not affiliated with laracasts in any way. If you're having trouble setting up [Amazon s3](https://aws.amazon.com/s3/) you can contact me and I'll try to help you out. Or you can choose to use a different storage provider.
+For help setting up [Amazon s3](https://aws.amazon.com/s3/) you can check out this [tutorial](https://laracasts.com/series/multitenancy-in-practice/episodes/7) by Kevin McKee, a laracasts instructor. This is a paid tutorial but it's worth it. I learned a lot from it. And, No I'm not affiliated with laracasts in any way. If you're having trouble setting up [Amazon s3](https://aws.amazon.com/s3/) you can contact me and I'll try to help you out. Or you can choose to use a different storage provider.
 
 
 If you are using [forge](https://forge.laravel.com/) you can add the credentials to the server environment variables.
@@ -232,7 +232,7 @@ _For App examples, please refer to the [WittyWorkflow](https://wittyworkflow.com
 3. [x] Realtime validation for all components
 4. [x] Lazy image loading on hero
 5. [x] Create role based access to team members.Non-team members do not have access to teams
-6. [x] Add wire:navigate to responsive links
+6. [x] Add wire:navigate to links for SPA functionality.
 7. [x] Staff members can create their own teams but cannot modify teams they belong to teams disabled momentarily
 8. [x] Above functionality for responsive menu
 9. [x] Disable making a user an administrator on JetstreamServiceProvider
@@ -251,6 +251,17 @@ _For App examples, please refer to the [WittyWorkflow](https://wittyworkflow.com
 23. [x] make CRUD for SEO
 24. [x] install Schema.org for better SEO
 25. [ ] make PWA for the website
+26. [ ] make a blog
+27. [ ] make a shop
+28. [ ] make a forum
+29. [ ] make a chat
+30. [ ] make a calendar
+31. [ ] make a CRM
+32. [ ] make a project management tool
+33. [ ] make a time tracking tool
+34. [ ] make a billing tool
+35. [ ] make a file sharing tool
+36. [ ] make a video conferencing tool
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -297,7 +308,7 @@ Project Link: [https://github.com/kristi11/wittyworkflow/](https://github.com/kr
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+I've included a few of my favorite links to kick things off!
 
 * [Laravel](https://laravel.com)
 * [Livewire](https://livewire.laravel.com)
