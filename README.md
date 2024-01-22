@@ -130,10 +130,16 @@ To get started clone this repository.
    ```
    git clone https://github.com/kristi11/wittyworkflow.git
    ```
+   or if you have a different name you'd like to use for the project create an empty folder with your desired name and run the following command
+   ```
+   git clone https://github.com/kristi11/wittyworkflow.git .
+   ```
+   this will clone all of the project's content without the project name folder.
 2. Install NPM packages
    ```
    npm install
    ```
+   and run npm `npm run dev` if you're working locally or `npm run build` if you're working on production.
 3. Install the composer dependencies.
    ```
    composer install
