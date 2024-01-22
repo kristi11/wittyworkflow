@@ -218,7 +218,7 @@ Your application is now ready for use. Enjoy! To install it in production follow
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-_For App examples, please refer to the [WittyWorkflow](https://wittyworkflow.com/)_
+_For App examples, please refer to [WittyWorkflow](https://wittyworkflow.com/)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
