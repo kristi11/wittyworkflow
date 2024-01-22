@@ -30,6 +30,7 @@
     ·
     <a href="https://github.com/kristi11/wittyworkflow/issues">Request Feature</a>
   </p>
+    <b>PLEASE DO KEEP IN MIND THAT THIS IS A NEW APP AND THERE WILL BE A LOT OF ROOM FOR IMPROVEMENT</b>
 </div>
 
 
@@ -47,7 +48,6 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
