@@ -130,7 +130,7 @@ To get started clone this repository.
    ```
    git clone https://github.com/kristi11/wittyworkflow.git
    ```
-   or if you have a different name you'd like to use for the project create an empty folder with your desired name and run the following command
+   or if you have a different name you'd like to use for the project create an empty folder with your desired name and run the following command:
    ```
    git clone https://github.com/kristi11/wittyworkflow.git .
    ```
