@@ -9,11 +9,13 @@
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
-
                 @include('components.navigation.navigation-links')
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <button type="button" x-data="{ theme: Theme.get() }" @click="toggleTheme">
+                    <x-heroicon-o-sun class="w-5 h-5" />
+                </button>
                 @include('components.navigation.teams-dropdown')
                 @include('components.navigation.settings-dropdown')
             </div>
@@ -26,3 +28,18 @@
     </div>
     @include('components.navigation.responsive-navigation-menu')
 </nav>
+
+<script>
+    function toggleTheme() {
+        let theme = Theme.get() === 'light' ? 'dark' : 'light';
+        Theme.set(theme);
+        sessionStorage.setItem('current_theme', theme);
+    }
+
+    // Load the initial theme from session storage
+    document.addEventListener('DOMContentLoaded', function () {
+        let theme = sessionStorage.getItem('current_theme') || 'light';
+        Theme.set(theme);
+    });
+</script>
+
