@@ -93,3 +93,16 @@
         </div>
     </div>
 </div>
+<script>
+    function toggleTheme() {
+        let theme = Theme.get() === 'light' ? 'dark' : 'light';
+        Theme.set(theme);
+        sessionStorage.setItem('current_theme', theme);
+    }
+
+    // Load the initial theme from session storage
+    document.addEventListener('DOMContentLoaded', function () {
+        let theme = sessionStorage.getItem('current_theme') || 'light';
+        Theme.set(theme);
+    });
+</script>

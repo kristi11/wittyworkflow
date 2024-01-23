@@ -22,6 +22,9 @@
 
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
+                <button type="button" x-data="{ theme: Theme.get() }" @click="toggleTheme">
+                    <x-heroicon-o-sun class="w-5 h-5" />
+                </button>
                 @include('components.navigation.hamburger')
             </div>
         </div>
