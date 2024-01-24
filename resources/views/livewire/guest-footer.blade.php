@@ -73,8 +73,16 @@
                     </div>
                     <div class="flex-1">
                         <div class="col-span-1 flex items-center justify-center md:justify-end text-black">
-                            <a target="_blank" href="https://www.digitalocean.com/?refcode=2d2478a20038&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"><img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%202.svg" alt="DigitalOcean Referral Badge" /></a>
+                            <ul>
+                            <li>
+                                <a target="_blank" href="https://www.digitalocean.com/?refcode=2d2478a20038&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge"><img src="https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%202.svg" alt="DigitalOcean Referral Badge" /></a>
+                            </li>
+                            <li>
+                                <a href="https://www.producthunt.com/posts/witty-workflow?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-witty&#0045;workflow" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=435860&theme=light" alt="Witty&#0032;workflow - Witty&#0032;workflow&#0032;is&#0032;designed&#0032;to&#0032;streamline&#0032;business&#0032;management | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+                            </li>
+                            </ul>
                         </div>
+
                     </div>
                 </div>
             </div>

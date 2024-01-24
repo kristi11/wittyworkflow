@@ -268,6 +268,12 @@ _For App examples, please refer to [WittyWorkflow](https://wittyworkflow.com/)_
 34. [ ] make a billing tool
 35. [ ] make a file sharing tool
 36. [ ] make a video conferencing tool
+37. [ ] make a note taking tool
+38. [ ] make a task management tool
+39. [ ] Create AI chatbot
+40. [x] Create dark/light mode toggle
+41. [ ] Integrate google analytics
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
