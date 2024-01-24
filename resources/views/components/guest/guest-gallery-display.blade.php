@@ -70,6 +70,6 @@
     @endforelse
     </div>
     <div class="flex justify-center mt-3 p-2">
-        {{ $galleries->links() }}
+        {{ $galleries->links(data : ['scrollTo' => false]) }}
     </div>
 </div>

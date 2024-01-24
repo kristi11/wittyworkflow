@@ -273,6 +273,7 @@ _For App examples, please refer to [WittyWorkflow](https://wittyworkflow.com/)_
 39. [ ] Create AI chatbot
 40. [x] Create dark/light mode toggle
 41. [ ] Integrate google analytics
+42. [ ] Create a calendar display for appointments
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
