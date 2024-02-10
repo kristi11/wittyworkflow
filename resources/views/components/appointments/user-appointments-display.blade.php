@@ -1,7 +1,7 @@
 <div class="flex justify-end mr-3">
-{{--    <p class="bg-gray-200 flex justify-center mb-6 p-6 rounded-lg shadow-md text-gray-700 w-9/12 invisible md:visible">--}}
-{{--        {{ __('Here you can manage your appointments') }}--}}
-{{--    </p>--}}
+    {{--    <p class="bg-gray-200 flex justify-center mb-6 p-6 rounded-lg shadow-md text-gray-700 w-9/12 invisible md:visible">--}}
+    {{--        {{ __('Here you can manage your appointments') }}--}}
+    {{--    </p>--}}
     <x-button class="mb-5 " wire:click="addAppointment">
         New appointment
     </x-button>
@@ -100,7 +100,7 @@
                                 <x-danger-button wire:click="delete({{ $appointment->id }})" wire:confirm="Are you sure you want to cancel this appointment?">
                                     {{ __('Cancel appointment') }}
                                 </x-danger-button>
-                                @else
+                            @else
                                 <x-secondary-button wire:click="edit({{ $appointment->id }})" class="mr-3">
                                     {{ __('Edit') }}
                                 </x-secondary-button>

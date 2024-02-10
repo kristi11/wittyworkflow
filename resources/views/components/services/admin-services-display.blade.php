@@ -1,9 +1,9 @@
 <div>
     <div class="flex justify-end mr-3">
 
-{{--        <p class="bg-gray-200 flex justify-center mb-6 p-6 rounded-lg shadow-md text-gray-700 w-9/12">--}}
-{{--            {{ __('Please provide what services your business offers ') }}--}}
-{{--        </p>--}}
+        {{--        <p class="bg-gray-200 flex justify-center mb-6 p-6 rounded-lg shadow-md text-gray-700 w-9/12">--}}
+        {{--            {{ __('Please provide what services your business offers ') }}--}}
+        {{--        </p>--}}
         <x-button class="mb-5" wire:click="addService">
             Add Service
         </x-button>

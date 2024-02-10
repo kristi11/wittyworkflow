@@ -7,22 +7,30 @@
             </h2>
         </div>
 
-        <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
-            Here you can manage your appointments.
-        </p>
+        @if($appointmentsVisibility == 0)
+            <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                Appointments are disabled.
+            </p>
 
-        <p class="mt-4 text-sm">
-            <a href="{{ route('appointments') }}" wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">
-                @if(count($userAppointments) == 0)
-                    {{ 'You don\'t have any appointments' }}
-                @elseif(count($userAppointments) == 1)
-                    {{ count($userAppointments). ' upcoming appointment' }}
-                @else
-                    {{ count($userAppointments). ' upcoming appointments' }}
-                @endif
-                <x-icons.right-carret/>
-            </a>
-        </p>
+        @else
+
+            <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                Here you can manage the appointments.
+            </p>
+
+            <p class="mt-4 text-sm">
+                <a href="{{ route('appointments') }}" wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">
+                    @if(count($userAppointments) == 0)
+                        {{ 'There\'s no appointments at this time' }}
+                    @elseif(count($userAppointments) == 1)
+                        {{ count($userAppointments). ' upcoming appointment' }}
+                    @else
+                        {{ count($userAppointments). ' upcoming appointments' }}
+                    @endif
+                    <x-icons.right-carret/>
+                </a>
+            </p>
+        @endif
     </div>
 
     <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
@@ -60,24 +68,56 @@
             Check services below or click <a href="{{ route('services') }}" wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">here</a> to view a detailed version.
         </p>
 
-{{--        <p class="mt-4 text-gray-600 text-sm leading-relaxed">--}}
-{{--            Current services offered by this business:--}}
-{{--        </p>--}}
+        {{--        <p class="mt-4 text-gray-600 text-sm leading-relaxed">--}}
+        {{--            Current services offered by this business:--}}
+        {{--        </p>--}}
 
         @if($services)
             <div class="px-4">
                 <ul>
+                    {{--                    @foreach($services as $service)--}}
+                    {{--                        <li class="mt-1 text-gray-500 text-sm leading-relaxed hover:underline cursor-pointer font-semibold dark:text-gray-200">--}}
+                    {{--                            @if($service->estimated_hours <= '1' && $service->estimated_minutes == '0' || $service->estimated_hours <= '1' && $service->estimated_minutes == '00')--}}
+                    {{--                                {{ $service->name.', '.'$'.$service->price.', '.$service->estimated_hours.' hour' }}--}}
+                    {{--                            @elseif($service->estimated_hours >= '1' && $service->estimated_minutes == '0' || $service->estimated_hours >= '1' && $service->estimated_minutes == '00')--}}
+                    {{--                                {{ $service->name.', '.'$'.$service->price.', '.$service->estimated_hours.' hours' }}--}}
+                    {{--                            @else--}}
+                    {{--                                {{ $service->name.', '.'$'.$service->price.', '.$service->estimated_hours.':'.$service->estimated_minutes.' hours' }}--}}
+                    {{--                            @endif--}}
+                    {{--                        </li>--}}
+                    {{--                    @endforeach--}}
                     @foreach($services as $service)
                         <li class="mt-1 text-gray-500 text-sm leading-relaxed hover:underline cursor-pointer font-semibold dark:text-gray-200">
-                            @if($service->estimated_hours <= '1' && $service->estimated_minutes == '0' || $service->estimated_hours <= '1' && $service->estimated_minutes == '00')
-                                {{ $service->name.', '.'$'.$service->price.', '.$service->estimated_hours.' hour' }}
-                            @elseif($service->estimated_hours >= '1' && $service->estimated_minutes == '0' || $service->estimated_hours >= '1' && $service->estimated_minutes == '00')
-                                {{ $service->name.', '.'$'.$service->price.', '.$service->estimated_hours.' hours' }}
-                            @else
-                                {{ $service->name.', '.'$'.$service->price.', '.$service->estimated_hours.':'.$service->estimated_minutes.' hours' }}
+                            {{ $service->name }}
+
+                            @if($service->price !== null)
+                                {{ ', '.'$'.$service->price }}
+                            @endif
+
+                            @if($service->estimated_hours !== null && $service->estimated_minutes !== null)
+                                @php
+                                    $displayedValues = [];
+                                    if($service->estimated_hours > 0) {
+                                        $displayedValues[] = $service->estimated_hours . ($service->estimated_hours == 1 ? ' hour' : ' hours');
+                                    }
+                                    if($service->estimated_minutes > 0) {
+                                        $displayedValues[] = $service->estimated_minutes . ' minute' . ($service->estimated_minutes == 1 ? '' : 's');
+                                    }
+                                @endphp
+
+                                @if(count($displayedValues) > 1)
+                                    {{ ', ' . implode(', ', array_slice($displayedValues, 0, -1)) . ' and ' . end($displayedValues) }}
+                                @else
+                                    {{ ' and ' . implode(' and ', $displayedValues) }}
+                                @endif
+                            @elseif($service->estimated_hours !== null)
+                                {{ ', '.$service->estimated_hours.' hour'.($service->estimated_hours == 1 ? '' : 's') }}
+                            @elseif($service->estimated_minutes !== null)
+                                {{ ', '.$service->estimated_minutes.' minute'.($service->estimated_minutes == 1 ? '' : 's') }}
                             @endif
                         </li>
                     @endforeach
+
                 </ul>
             </div>
         @else(count($services) == 1)
@@ -96,19 +136,26 @@
 
         </div>
 
-        <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
-            Business hours for this business:
-        </p>
+        @if($alwaysOpen)
+            <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                This business is always open.
+            </p>
 
-        @forelse($businessHours as $hours)
-            <p class="mt-1 text-gray-500 text-sm leading-relaxed font-semibold dark:text-gray-200">
-                {{ ucwords($hours->day) . ' - ' . (ucwords($hours->open ? 'open' : 'closed')) . ($hours->open ? (' from ' . \Carbon\Carbon::parse($hours->open_from)->format('g:i A') . ' to ' . \Carbon\Carbon::parse($hours->open_until)->format('g:i A')) : '') }}
+        @else
+            <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                Business hours for this business:
             </p>
-        @empty
-            <p class="mt-1 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
-                This business hasn't set any business hours yet.
-            </p>
-        @endforelse
+
+            @forelse($businessHours as $hours)
+                <p class="mt-1 text-gray-500 text-sm leading-relaxed font-semibold dark:text-gray-200">
+                    {{ ucwords($hours->day) . ' - ' . (ucwords($hours->open ? 'open' : 'closed')) . ($hours->open ? (' from ' . \Carbon\Carbon::parse($hours->open_from)->format('g:i A') . ' to ' . \Carbon\Carbon::parse($hours->open_until)->format('g:i A')) : '') }}
+                </p>
+            @empty
+                <p class="mt-1 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                    This business hasn't set any business hours yet.
+                </p>
+            @endforelse
+        @endif
     </div>
 
     <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
@@ -126,14 +173,7 @@
 
         <p class="flex gap-1 leading-relaxed mt-4 text-gray-500 text-sm">
             @forelse($galleries as $gallery)
-                @if($gallery->path)
-                    @if($gallery->path !== 'services.jpg')
-                        <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="h-8 w-8 object-cover rounded-full">
-                    @else
-                        <img src="{{ Storage::disk('serviceImages')->url('serviceImages/services.jpg') }}" alt="Service images" class="h-8 w-8 object-cover rounded-full">
-                    @endif
-                @endif
-{{--                <img class="h-8 w-8 object-cover rounded-full" src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="{{ $gallery->path }}">--}}
+                <img class="h-8 w-8 object-cover rounded-full" src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="{{ $gallery->path }}">
             @empty
                 {{ 'This business hasn\'t uploaded any images' }}
             @endforelse
@@ -151,7 +191,7 @@
         <div class="flex items-center">
             <x-icons.social-networks/>
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
-                <a href="{{ route('socials') }}">Social Networks</a>
+                <a href="{{ route('gallery') }}">Social Networks</a>
             </h2>
 
         </div>
@@ -175,7 +215,7 @@
                     @endif
 
                     @if(!empty($socials->facebook))
-                        <a target="_blank" class="flex font-mono hover:text-indigo-600 items-center mb-4 text-center" href="{{ 'https://www.facebook.com/'.$socials->facebook }}">
+                        <a target="_blank" class="flex font-mono hover:text-indigo-600 items-center mb-4 text-center" href="{{ 'https://www.facebook.com/profile.php?id='.$socials->facebook }}">
                             <x-svg.facebook-s-v-g/>
                         </a>
                     @endif

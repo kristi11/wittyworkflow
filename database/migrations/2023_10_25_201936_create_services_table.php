@@ -16,9 +16,9 @@ return new class extends Migration {
                 ->onDelete("cascade");
             $table->string('name');
             $table->text('description');
-            $table->integer('price');
-            $table->integer('estimated_hours');
-            $table->integer('estimated_minutes');
+            $table->integer('price')->nullable();
+            $table->integer('estimated_hours')->nullable();
+            $table->integer('estimated_minutes')->nullable();
             $table->string('extra_description')->nullable();
             $table->timestamps();
         });

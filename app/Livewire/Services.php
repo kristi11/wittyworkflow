@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Service;
+use App\Models\Setting;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -26,6 +27,9 @@ class Services extends Component
     public $showServicesModal = false;
     private $deleteId;
 
+    public $appointmentsVisibility;
+    public $flexiblePricing;
+
 
     public $showServicesDescriptionModal = false;
 
@@ -36,9 +40,9 @@ class Services extends Component
         return [
             'name' => 'required|min:3|max:255',
             'description' => 'required|min:3|max:3000',
-            'price' => 'required|numeric|min:0|max:1000000',
-            'estimated_hours' => 'required|numeric',
-            'estimated_minutes' => 'required|numeric|max:59',
+            'price' => 'nullable',
+            'estimated_hours' => 'nullable|numeric',
+            'estimated_minutes' => 'nullable|numeric|max:59',
             'extra_description' => 'nullable|min:3|max:255',
         ];
     }
@@ -47,6 +51,9 @@ class Services extends Component
     {
 //        $this->service = $this->makeBlackService();
         $this->service = $service;
+        // Retrieve the value directly
+        $this->appointmentsVisibility = Setting::value('appointmentsVisibility') ?? false;
+        $this->flexiblePricing = Setting::value('flexiblePricing') ?? false;
     }
 
     public function updated($propertyName): void
@@ -91,10 +98,10 @@ class Services extends Component
         $this->service->user_id = auth()->id();
         $this->service->name = $this->name;
         $this->service->description = $this->description;
-        $this->service->price = $this->price;
-        $this->service->estimated_hours = $this->estimated_hours;
-        $this->service->estimated_minutes = $this->estimated_minutes;
-        $this->service->extra_description = $this->extra_description;
+        $this->service->price = empty($this->price) ? null : $this->price; // Handle nullable field
+        $this->service->estimated_hours = empty($this->estimated_hours) ? null : $this->estimated_hours; // Handle nullable field
+        $this->service->estimated_minutes = empty($this->estimated_minutes) ? null : $this->estimated_minutes; // Handle nullable field
+        $this->service->extra_description = empty($this->extra_description) ? null : $this->extra_description; // Handle nullable field
         $this->service->save();
 
         $this->showServicesModal = false;

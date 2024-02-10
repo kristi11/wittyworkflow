@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\BusinessHour;
 use App\Models\Functionality;
+use App\Models\Setting;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -19,6 +20,8 @@ class BusinessHours extends Component
 
     public $open = '';
     public $showBusinessHoursModal = false;
+
+    public $alwaysOpen;
 
     public function rules(): array
     {
@@ -84,11 +87,25 @@ class BusinessHours extends Component
     public function mount(): void
     {
         $this->businessHour = $this->makeBlankBusinessHours();
+        $this->alwaysOpen = Setting::value('alwaysOpen') ?? false;
     }
 
     private function makeBlankBusinessHours()
     {
         return BusinessHour::make([]);
+    }
+
+    public function toggleAlwaysOpen(): void
+    {
+        $this->alwaysOpen = !$this->alwaysOpen;
+
+        // Update or create the setting record
+        Setting::updateOrCreate(
+            ['user_id' => 1],
+            ['alwaysOpen' => $this->alwaysOpen],
+        );
+
+        $this->dispatch('notify', 'Always open status changed!');
     }
 
     public function edit(BusinessHour $businessHour): void

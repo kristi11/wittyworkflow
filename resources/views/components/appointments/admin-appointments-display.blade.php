@@ -91,7 +91,7 @@
                                     <p class="text-red-500">
                                         {{ __('Appointment cancelled') }}
                                     </p>
-                                    @else
+                                @else
                                     <x-secondary-button wire:click="editStatus({{ $appointment->id }})" class="mr-3">
                                         {{ __('Update Status') }}
                                     </x-secondary-button>
@@ -112,6 +112,6 @@
         </x-table.table>
     </div>
     @include('components.appointments.admin-appointments-form')
-        {{ $appointments->links() }}
-    </div>
+    {{ $appointments->links() }}
+</div>
 </div>

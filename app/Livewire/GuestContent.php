@@ -7,6 +7,7 @@ use App\Models\BusinessHour;
 use App\Models\Gallery;
 use App\Models\Hero;
 use App\Models\Service;
+use App\Models\Setting;
 use App\Models\Social;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
@@ -27,7 +28,9 @@ class GuestContent extends Component
     use WithPagination;
     public $gallery;
     public $service;
-
+    public $appointmentsVisibility;
+    public $alwaysOpen;
+    public $flexiblePricing;
     public $showGalleryImageModal = false;
     public $showServicesDescriptionModal = false;
 
@@ -35,6 +38,10 @@ class GuestContent extends Component
     {
         $this->gallery = $gallery;
         $this->service = $service;
+        // Retrieve the value directly
+        $this->appointmentsVisibility = Setting::value('appointmentsVisibility') ?? false;
+        $this->alwaysOpen = Setting::value('alwaysOpen') ?? false;
+        $this->flexiblePricing = Setting::value('flexiblePricing') ?? false;
     }
 
     public function expandCustomerImage($galleryId): void

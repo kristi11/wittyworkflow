@@ -7,22 +7,31 @@
             </h2>
         </div>
 
-        <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
-            Here you can manage the appointments.
-        </p>
 
-        <p class="mt-4 text-sm">
-            <a href="{{ route('appointments') }}" wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">
-                @if(count($appointments) == 0)
-                    {{ 'There\'s no appointments at this time' }}
-                @elseif(count($appointments) == 1)
-                    {{ count($appointments). ' upcoming appointment' }}
-                @else
-                    {{ count($appointments). ' upcoming appointments' }}
-                @endif
-                <x-icons.right-carret/>
-            </a>
-        </p>
+        @if($appointmentsVisibility == 0)
+            <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                Appointments are disabled.
+            </p>
+
+        @else
+
+            <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                Here you can manage the appointments.
+            </p>
+
+            <p class="mt-4 text-sm">
+                <a href="{{ route('appointments') }}" wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">
+                    @if(count($appointments) == 0)
+                        {{ 'There\'s no appointments at this time' }}
+                    @elseif(count($appointments) == 1)
+                        {{ count($appointments). ' upcoming appointment' }}
+                    @else
+                        {{ count($appointments). ' upcoming appointments' }}
+                    @endif
+                    <x-icons.right-carret/>
+                </a>
+            </p>
+        @endif
     </div>
     <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
         <div class="flex items-center">

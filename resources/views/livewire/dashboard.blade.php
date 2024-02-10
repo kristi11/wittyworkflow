@@ -27,8 +27,34 @@
     </div>
 
     <div class="bg-opacity-25 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 p-6 lg:p-8">
-        <x-admin-dashboard-content :users="$users" :address="$address" :services="$services" :businessHours="$businessHours" :appointments="$appointments" :galleries="$galleries" :socials="$socials" :seo="$seo"/>
-        <x-staff-dashboard-content :businessHours="$businessHours" :appointments="$appointments"/>
-        <x-user_dashboard_content :address="$address" :services="$services" :businessHours="$businessHours" :userAppointments="$userAppointments" :galleries="$galleries" :socials="$socials"/>
+        <x-admin-dashboard-content
+            :alwaysOpen="$alwaysOpen"
+            :appointmentsVisibility="$appointmentsVisibility"
+            :users="$users"
+            :address="$address"
+            :services="$services"
+            :businessHours="$businessHours"
+            :appointments="$appointments"
+            :galleries="$galleries"
+            :socials="$socials"
+            :seo="$seo"
+            :flexiblePricing="$flexiblePricing"
+        />
+        <x-staff-dashboard-content
+            :alwaysOpen="$alwaysOpen"
+            :appointmentsVisibility="$appointmentsVisibility"
+            :businessHours="$businessHours"
+            :appointments="$appointments"
+        />
+        <x-user_dashboard_content
+            :alwaysOpen="$alwaysOpen"
+            :appointmentsVisibility="$appointmentsVisibility"
+            :address="$address"
+            :services="$services"
+            :businessHours="$businessHours"
+            :userAppointments="$userAppointments"
+            :galleries="$galleries"
+            :socials="$socials"
+        />
     </div>
 </div>

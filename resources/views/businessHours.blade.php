@@ -6,6 +6,6 @@
     </x-slot>
 
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-        <livewire:business-hours/>
+        <livewire:business-hours :alwaysOpen/>
     </div>
 </x-app-layout>

@@ -108,4 +108,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(SEO::class);
     }
+
+    public function setting(): HasOne
+    {
+        return $this->hasOne(Setting::class);
+    }
 }

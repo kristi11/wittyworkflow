@@ -8,6 +8,7 @@ use App\Mail\NewAppointmentMailable;
 use App\Mail\UserAppointmentChangeMailable;
 use App\Models\Appointment;
 use App\Models\Service;
+use App\Models\Setting;
 use App\Models\User;
 use Auth;
 use Illuminate\Contracts\View\Factory;
@@ -28,6 +29,7 @@ class Appointments extends Component
     public $client_phone;
     public $client_message;
     public $client_referer;
+    public $appointmentsVisibility;
 
     public bool $readonly = true;
 
@@ -55,6 +57,7 @@ class Appointments extends Component
         $this->client_email = auth()->user()->email;
         $this->client_phone = auth()->user()->phone;
         $this->appointment_status = 'pending';
+        $this->appointmentsVisibility = Setting::value('appointmentsVisibility') ?? false;
     }
 
     public function updated($propertyName): void
@@ -157,22 +160,22 @@ class Appointments extends Component
         Appointment::find($this->appointment->id)->update(['appointment_status' => $this->appointment_status]);
         $adminUsers = User::where('role', 'admin')->get();
 
-            $this->appointment->name = $this->name;
-            $this->appointment->date = $this->date;
-            $this->appointment->appointment_time = $this->appointment_time;
-            $this->appointment->appointment_status = $this->appointment_status;
-            $this->appointment->client_name = $this->client_name;
-            $this->appointment->client_email = $this->client_email;
-            $this->appointment->client_phone = $this->client_phone;
-            $this->appointment->client_message = $this->client_message;
-            $this->appointment->client_referer = $this->client_referer;
-            $this->appointment->save();
+        $this->appointment->name = $this->name;
+        $this->appointment->date = $this->date;
+        $this->appointment->appointment_time = $this->appointment_time;
+        $this->appointment->appointment_status = $this->appointment_status;
+        $this->appointment->client_name = $this->client_name;
+        $this->appointment->client_email = $this->client_email;
+        $this->appointment->client_phone = $this->client_phone;
+        $this->appointment->client_message = $this->client_message;
+        $this->appointment->client_referer = $this->client_referer;
+        $this->appointment->save();
 
-            // Send the mailable to the user
-            Mail::to($this->appointment->client_email)->queue(new AppointmentStatusChangedMailable($this->appointment));
+        // Send the mailable to the user
+        Mail::to($this->appointment->client_email)->queue(new AppointmentStatusChangedMailable($this->appointment));
 
-            $this->dispatch('notify', 'Appointment updated!');
-            $this->showAppointmentsModal = false;
+        $this->dispatch('notify', 'Appointment updated!');
+        $this->showAppointmentsModal = false;
     }
 
     public function delete(Appointment $appointment): void

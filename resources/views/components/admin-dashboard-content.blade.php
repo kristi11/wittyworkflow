@@ -31,24 +31,40 @@
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
                 <a href="{{ route('appointments') }}" wire:navigate>Appointments</a>
             </h2>
-        </div>
-
-        <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
-            Here you can manage the appointments.
-        </p>
-
-        <p class="mt-4 text-sm">
-            <a href="{{ route('appointments') }}" wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">
-                @if(count($appointments) == 0)
-                    {{ 'You don\'t have any appointments' }}
-                @elseif(count($appointments) == 1)
-                    {{ count($appointments). ' upcoming appointment' }}
-                @else
-                    {{ count($appointments). ' upcoming appointments' }}
+            <div class="flex space-x-4 pl-2">
+                <button wire:click="toggleAppointmentsVisibility" class="bg-indigo-100 dark:bg-gray-700 dark:hover:bg-gray-800 dark_bg-indigo-200 flex h-8 items-center justify-center rounded-full shadow-md w-8">
+                    @if($appointmentsVisibility)
+                        <x-icons.x-mark/>
+                    @else
+                        <x-icons.checkmark/>
                 @endif
-                <x-icons.right-carret/>
-            </a>
-        </p>
+            </div>
+        </div>
+        @if(!$appointmentsVisibility)
+            <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                Appointments are disabled. Click above to enable them.
+            </p>
+
+        @else
+
+            <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                Here you can manage the appointments. Click above to disable the appointments.
+            </p>
+
+            <p class="mt-4 text-sm">
+                <a href="{{ route('appointments') }}" wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">
+                    @if(count($appointments) == 0)
+                        {{ 'There\'s no appointments at this time' }}
+                    @elseif(count($appointments) == 1)
+                        {{ count($appointments). ' upcoming appointment' }}
+                    @else
+                        {{ count($appointments). ' upcoming appointments' }}
+                    @endif
+                    <x-icons.right-carret/>
+                </a>
+            </p>
+        @endif
+
     </div>
 
     <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
@@ -67,7 +83,7 @@
             <a href="{{ route('hero') }}"  wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">
                 Check the landingpage hero
 
-               <x-icons.right-carret/>
+                <x-icons.right-carret/>
             </a>
         </p>
     </div>
@@ -85,21 +101,21 @@
             Here you can manage your address.
         </p>
 
-           @if($address)
+        @if($address)
             <p class="mt-4 text-indigo-600 hover:text-indigo-700 font-semibold text-sm leading-relaxed dark:text-indigo-300">
                 <a href="https://www.google.com/maps/search/{{ urlencode($address->street . ', ' . $address->city . ', ' . $address->state . ', ' . $address->zip) }}" target="_blank">
                     {{$address->street . ', ' . $address->city . ', ' . $address->state . ', ' . $address->zip }}
                 </a>
             </p>
-                <p class="mt-4 text-sm">
-                    <a href="{{ route('address') }}"  wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">
-                        Check your address
-                        <x-icons.right-carret/>
-                    </a>
-                </p>
-            @else
-                You haven't set your address yet.
-            @endif
+            <p class="mt-4 text-sm">
+                <a href="{{ route('address') }}"  wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">
+                    Check your address
+                    <x-icons.right-carret/>
+                </a>
+            </p>
+        @else
+            You haven't set your address yet.
+        @endif
     </div>
     <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
         <div class="flex items-center">
@@ -107,31 +123,46 @@
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
                 Services
             </h2>
+            <div class="flex space-x-4 pl-2">
+                <button wire:click="togglePricing" class="bg-indigo-100 dark:bg-gray-700 dark:hover:bg-gray-800 dark_bg-indigo-200 flex h-8 items-center justify-center rounded-full shadow-md w-8">
+                    @if($flexiblePricing)
+                        <x-icons.x-mark/>
+                    @else
+                        <x-icons.checkmark/>
+                    @endif
+            </div>
         </div>
 
-        <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
-            Here you can manage the services in the system.
-        </p>
+        @if($flexiblePricing)
+            <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                Here you can manage the services in the system. Flexible pricing is enabled. Click above to disable it.
+            </p>
+        @else
+            <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                Here you can manage the services in the system. Flexible pricing is disabled. Click above to enable it.
+            </p>
+        @endif
 
-            @if(count($services) == 0)
+
+        @if(count($services) == 0)
             <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
                 You have no services in the system.
             </p>
-            @elseif(count($services) == 1)
+        @elseif(count($services) == 1)
             <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
                 You have 1 service in the system.
             </p>
-            @else
+        @else
             <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
                 You have {{ count($services) }} services in the system.
             </p>
-            @endif
-            <p class="mt-4 text-sm">
-                <a href="{{ route('services') }}"  wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">
-                    Check your services
-                    <x-icons.right-carret/>
-                </a>
-            </p>
+        @endif
+        <p class="mt-4 text-sm">
+            <a href="{{ route('services') }}"  wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">
+                Check your services
+                <x-icons.right-carret/>
+            </a>
+        </p>
     </div>
 
     <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
@@ -140,28 +171,43 @@
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
                 <a href="{{ route('businessHours') }}">Business hours</a>
             </h2>
+            <div class="flex space-x-4 pl-2">
+                <button wire:click="toggleAlwaysOpen" class="bg-indigo-100 dark:bg-gray-700 dark:hover:bg-gray-800 dark_bg-indigo-200 flex h-8 items-center justify-center rounded-full shadow-md w-8">
+                    @if($alwaysOpen)
+                        <x-icons.x-mark/>
+                    @else
+                        <x-icons.checkmark/>
+                @endif
+            </div>
 
         </div>
 
-        <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
-            Here you can manage your business hours.
-        </p>
+        @if($alwaysOpen)
+            <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                This business is always open. Click above to change the status.
+            </p>
 
-        @forelse($businessHours as $hours)
-            <p class="mt-1 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
-                {{ ucwords($hours->day) . ' - ' . (ucwords($hours->open ? 'open' : 'closed')) . ($hours->open ? (' from ' . \Carbon\Carbon::parse($hours->open_from)->format('g:i A') . ' to ' . \Carbon\Carbon::parse($hours->open_until)->format('g:i A')) : '') }}
+        @else
+            <p class="mt-4 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                Here you can manage your business hours.
             </p>
-        @empty
-            <p class="mt-1 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
-                You haven't set your business hours yet.
+
+            @forelse($businessHours as $hours)
+                <p class="mt-1 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                    {{ ucwords($hours->day) . ' - ' . (ucwords($hours->open ? 'open' : 'closed')) . ($hours->open ? (' from ' . \Carbon\Carbon::parse($hours->open_from)->format('g:i A') . ' to ' . \Carbon\Carbon::parse($hours->open_until)->format('g:i A')) : '') }}
+                </p>
+            @empty
+                <p class="mt-1 text-gray-500 text-sm leading-relaxed dark:text-gray-200">
+                    You haven't set your business hours yet.
+                </p>
+            @endforelse
+            <p class="mt-4 text-sm">
+                <a href="{{ route('businessHours') }}"  wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">
+                    Check your business hours
+                    <x-icons.right-carret/>
+                </a>
             </p>
-        @endforelse
-        <p class="mt-4 text-sm">
-            <a href="{{ route('businessHours') }}"  wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">
-                Check your business hours
-                <x-icons.right-carret/>
-            </a>
-        </p>
+        @endif
     </div>
 
     <div class="bg-indigo-50 dark:bg-gray-600 p-6 rounded-lg shadow-md">
@@ -179,14 +225,7 @@
 
         <p class="flex gap-1 leading-relaxed mt-4 text-gray-500 text-sm">
             @forelse($galleries as $gallery)
-                @if($gallery->path)
-                    @if($gallery->path !== 'services.jpg')
-                        <img src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="Service images" class="h-8 w-8 object-cover rounded-full">
-                    @else
-                        <img src="{{ Storage::disk('serviceImages')->url('serviceImages/services.jpg') }}" alt="Service images" class="h-8 w-8 object-cover rounded-full">
-                    @endif
-                @endif
-{{--                <img class="h-8 w-8 object-cover rounded-full" src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="{{ $gallery->path }}">--}}
+                <img class="h-8 w-8 object-cover rounded-full" src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="{{ $gallery->path }}">
             @empty
                 <span class="dark:text-gray-200">{{ 'You haven\'t uploaded any images' }}</span>
             @endforelse
@@ -204,7 +243,7 @@
         <div class="flex items-center">
             <x-icons.social-networks/>
             <h2 class="ml-3 text-xl font-semibold text-gray-900 dark:text-gray-100">
-                <a href="{{ route('socials') }}">Social Networks</a>
+                <a href="{{ route('gallery') }}">Social Networks</a>
             </h2>
 
         </div>
@@ -228,7 +267,7 @@
                     @endif
 
                     @if(!empty($socials->facebook))
-                        <a target="_blank" class="flex font-mono hover:text-indigo-600 items-center mb-4 text-center" href="{{ 'https://www.facebook.com/'.$socials->facebook }}">
+                        <a target="_blank" class="flex font-mono hover:text-indigo-600 items-center mb-4 text-center" href="{{ 'https://www.facebook.com/profile.php?id='.$socials->facebook }}">
                             <x-svg.facebook-s-v-g/>
                         </a>
                     @endif
@@ -245,8 +284,8 @@
                         </a>
                     @endif
                 </div>
-                @endif
             @endif
+        @endif
 
         <p class="text-sm">
             <a href="{{ route('socials') }}" wire:navigate class="inline-flex items-center font-semibold text-indigo-700 dark:text-indigo-300">
