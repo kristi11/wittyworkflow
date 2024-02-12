@@ -6,6 +6,7 @@
     </x-slot>
 
     <div>
+        <div class="bg-indigo-100 dark:bg-gray-600 dark:text-gray-200 flex justify-center p-4 shadow-md text-gray-600">{{ __('Many features like updating the profile, account deletion etc.. have been disabled to preserve the integrity of a proper demonstration environment. To enable these features go to fortify.php and jetstream.php and uncomment whatever\'s needed for your app.') }}</div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                 @livewire('profile.update-profile-information-form')
