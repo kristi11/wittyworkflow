@@ -9,6 +9,7 @@ use App\Models\Gallery;
 use App\Models\Hero;
 use App\Models\Seo;
 use App\Models\Service;
+use App\Models\Setting;
 use App\Models\Social;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -29,5 +30,6 @@ class DatabaseSeeder extends Seeder
         Seo::factory()->create();
         BusinessHour::factory()->count(7)->create();
         Social::factory()->create();
+        Setting::factory()->create();
     }
 }

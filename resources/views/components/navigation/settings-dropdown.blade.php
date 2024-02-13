@@ -31,6 +31,15 @@
 
             <div class="border-t border-gray-200"></div>
             <div class="block px-4 py-2 text-xs text-gray-400">
+                {{ __('Chat') }}
+            </div>
+
+            <x-dropdown-link href="{{ url('/chat') }}" wire:navigate>
+                {{ __('Chat') }}
+            </x-dropdown-link>
+
+            <div class="border-t border-gray-200"></div>
+            <div class="block px-4 py-2 text-xs text-gray-400">
                 {{ __('Sections') }}
             </div>
 

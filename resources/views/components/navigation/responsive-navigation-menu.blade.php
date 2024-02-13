@@ -29,6 +29,14 @@
 
             <div class="border-t border-gray-200"></div>
             <div class="block px-4 py-2 text-xs text-gray-400">
+                {{ __('Chat') }}
+            </div>
+            <x-responsive-nav-link href="{{ url('/chat') }}" :active="request()->routeIs('chat')" wire:navigate>
+                {{ __('Chat') }}
+            </x-responsive-nav-link>
+
+            <div class="border-t border-gray-200"></div>
+            <div class="block px-4 py-2 text-xs text-gray-400">
                 {{ __('Sections') }}
             </div>
             <x-responsive-nav-link href="{{ route('appointments') }}" :active="request()->routeIs('appointments')" wire:navigate>

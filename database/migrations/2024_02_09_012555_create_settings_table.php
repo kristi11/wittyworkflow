@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->boolean('appointmentsVisibility')->default(false);
+            $table->boolean('appointmentsVisibility')->default(true);
             $table->boolean('hoursVisibility')->default(false);
             $table->boolean('galleriesVisibility')->default(false);
             $table->boolean('servicesVisibility')->default(false);
