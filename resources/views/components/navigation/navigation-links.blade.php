@@ -3,7 +3,7 @@
     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')" wire:navigate>
         {{ __('Dashboard') }}
     </x-nav-link>
-    <x-nav-link href="{{ url('/chat') }}" wire:navigate>
+    <x-nav-link href="{{ url('/chat') }}" wire:navigate :active="request()->routeIs('chat')">
         {{ __('Chat') }}
     </x-nav-link>
 </div>
