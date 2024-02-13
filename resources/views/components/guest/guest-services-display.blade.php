@@ -87,7 +87,7 @@
                             <div>
                                 <a href="{{ route('appointments') }}" wire:navigate>
                                     <x-secondary-button>
-                                        <x-icons.book-appointment class="mr-2"/>
+                                        <x-icons.book-appointment class="flex justify-center items-center"/>&nbsp;
                                         {{ __('Book') }}
                                     </x-secondary-button>
                                 </a>
