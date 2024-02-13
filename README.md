@@ -201,6 +201,24 @@ AWS_BUCKET=your-bucket-private
 AWS_BUCKET_PUBLIC=your-bucket-public
 AWS_USE_PATH_STYLE_ENDPOINT=false
 ```
+
+To set up your chat credentials first you have to sign up for [pusher](https://pusher.com/). 
+[Here's](https://chatify.munafio.com/installation) the setup and installation video from the creator of laravel chatify .This includes the set up of pusher and the installation of chatify(which is already installed).
+Then fill the following credentials to the `.env` file with the credentials from your pusher account.
+
+```
+PUSHER_APP_ID=your-pusher-app-id
+PUSHER_APP_KEY=your-pusher-app-key
+PUSHER_APP_SECRET=your-pusher-app-secret
+PUSHER_APP_CLUSTER=your-pusher-app-cluster
+```
+also add the following to the `.env` file
+```
+CHATIFY_STORAGE_DISK=your-s3-bucket-or-custom-driver
+CHATIFY_ROUTES_PREFIX=your-chatify-routes-prefix
+CHATIFY_NAME=Chatify-messeneger-name-here
+```
+
 The private bucket is used to store the livewire `tmp` files and the public bucket is used to store the images accessible to everyone.
 
 To clean up the `tmp` files uploaded on `S3` every 24 hours add the following command to your server 
@@ -260,7 +278,7 @@ _For App examples, please refer to [WittyWorkflow](https://wittyworkflow.com/)_
 26. [ ] make a blog
 27. [ ] make a shop
 28. [ ] make a forum
-29. [ ] make a chat
+29. [x] make a chat
 30. [ ] make a calendar
 31. [ ] make a CRM
 32. [ ] make a project management tool
