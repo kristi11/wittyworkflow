@@ -41,7 +41,7 @@
                     {{ __('Est. Minutes') }}
                 </x-table.table-heading>
                 <x-table.table-heading class="px-6 py-6">
-                    {{ __('Extra Description') }}
+                    {{ __('Extra Desc.') }}
                 </x-table.table-heading>
                 <x-table.table-heading class="px-6 py-6 flex justify-center">
                     {{ __('Actions') }}
