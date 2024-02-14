@@ -103,7 +103,11 @@
                 </div>
             @endforelse
         </div>
-        <div class="flex justify-center mt-3">
+        <div class="pt-4 flex justify-between items-center">
+            <div class="text-gray-700 text-sm">
+                Services: {{ \Illuminate\Support\Number::format($services->total()) }}
+            </div>
+
             {{ $services->links(data : ['scrollTo' => false]) }}
         </div>
     @endif

@@ -45,6 +45,7 @@
             @forelse($userAppointments as $appointment)
                 <tr class="bg-white border-b dark:bg-gray-700"
                     wire:loading.class.delay="opacity-50"
+                    wire:key="{{ $appointment->id }}"
                 >
                     <td class="px-6 py-4 text-gray-900 font- dark:text-gray-200">
                         {{ $appointment->name }}
