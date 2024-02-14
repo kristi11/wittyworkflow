@@ -12,9 +12,6 @@ export default defineConfig({
                 ...refreshPaths,
                 'app/Livewire/**',
             ],
-            rollupOptions: {
-                external: ['@alpinejs/ui/dist/cdn.js'],
-            },
         }),
     ],
 });
