@@ -15,8 +15,6 @@ class Services extends Component
 {
     use WithPagination;
 
-    public User $user;
-
     public $service;
 
     public $name;
@@ -31,7 +29,6 @@ class Services extends Component
     private $deleteId;
 
     public $appointmentsVisibility;
-    public $flexiblePricing;
 
 
     public $showServicesDescriptionModal = false;
@@ -39,7 +36,6 @@ class Services extends Component
     public $showDeleteModal = false;
 
     public $search = '';
-
 
     public function rules(): array
     {
@@ -55,12 +51,10 @@ class Services extends Component
 
     public function mount(Service $service): void
     {
-        $this->user = auth()->user();
 //        $this->service = $this->makeBlackService();
         $this->service = $service;
         // Retrieve the value directly
         $this->appointmentsVisibility = Setting::value('appointmentsVisibility') ?? false;
-        $this->flexiblePricing = Setting::value('flexiblePricing') ?? false;
     }
 
     public function updated($propertyName): void
@@ -122,6 +116,8 @@ class Services extends Component
         $this->dispatch("notify", "Service deleted!");
     }
 
+
+
     public function updatedSearch(): void
     {
         $this->resetPage();
@@ -138,7 +134,7 @@ class Services extends Component
 
     public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $query = $this->user->services();
+        $query = Service::query()->where('user_id', auth()->id());
 
         $query = $this->applySearch($query);
 
