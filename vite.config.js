@@ -12,6 +12,7 @@ export default defineConfig({
                 ...refreshPaths,
                 'app/Livewire/**',
             ],
+            external: ['@alpinejs/ui/dist/cdn.js'],
         }),
     ],
 });
