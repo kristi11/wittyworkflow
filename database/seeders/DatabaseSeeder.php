@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->withPersonalTeam()->create();
         User::factory()->secondRow()->withPersonalTeam()->create(); // Creates the second row with different values
         Hero::factory()->create();
-        Service::factory()->count(60)->create();
+        Service::factory()->count(12)->create();
         Address::factory()->create();
         Gallery::factory()->count(6)->create();
         Seo::factory()->create();
