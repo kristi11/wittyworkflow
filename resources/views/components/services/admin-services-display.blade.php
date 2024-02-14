@@ -1,16 +1,28 @@
 <div>
-    <div class="flex justify-end mr-3">
 
-        {{--        <p class="bg-gray-200 flex justify-center mb-6 p-6 rounded-lg shadow-md text-gray-700 w-9/12">--}}
-        {{--            {{ __('Please provide what services your business offers ') }}--}}
-        {{--        </p>--}}
-        <x-button class="mb-5" wire:click="addService">
-            Add Service
-        </x-button>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mr-3">
+        <div class="relative text-sm text-gray-800">
+            <div class="absolute pl-2 left-0 top-0 bottom-0 flex items-center pointer-events-none text-gray-500">
+                <x-icons.magnifying-glass />
+            </div>
+
+            <x-input wire:model.live="search" type="text" placeholder="Search service name or price" class="block ml-2 mr-2 my-2 w-full rounded-lg border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+        </div>
+
+        <div class="flex justify-end col-span-2">
+
+            {{--        <p class="bg-gray-200 flex justify-center mb-6 p-6 rounded-lg shadow-md text-gray-700 w-9/12">--}}
+            {{--            {{ __('Please provide what services your business offers ') }}--}}
+            {{--        </p>--}}
+            <x-button class="my-2 hidden md:block" wire:click="addService">
+                Add Service
+            </x-button>
+        </div>
     </div>
-
     <div class="bg-white overflow-y-auto shadow-md sm:rounded-lg ml-2 mr-2 rounded-md">
-        {{--Users table--}}
+
+        {{--Services table--}}
         <x-table.table>
             <x-slot name="head">
                 <x-table.table-heading class="px-6 py-6">
@@ -23,10 +35,10 @@
                     {{ __('Price') }}
                 </x-table.table-heading>
                 <x-table.table-heading class="px-6 py-6">
-                    {{ __('Estimated Hours') }}
+                    {{ __('Est. Hours') }}
                 </x-table.table-heading>
                 <x-table.table-heading class="px-6 py-6">
-                    {{ __('Estimated Minutes') }}
+                    {{ __('Est. Minutes') }}
                 </x-table.table-heading>
                 <x-table.table-heading class="px-6 py-6">
                     {{ __('Extra Description') }}
@@ -82,8 +94,11 @@
         {{--End users table--}}
     </div>
     {{--Paginate links--}}
-    <div class="p-2">
-        {{ $services->links() }}
+    <div class="pt-4 flex justify-between items-center">
+        <div class="text-gray-700 text-sm ml-3 mr-3">
+            Services: {{ $services->total() }}
+        </div>
+        {{ $services->links(data : ['scrollTo' => false]) }}
     </div>
     {{--End paginate links--}}
     @include('components.services.services_form')

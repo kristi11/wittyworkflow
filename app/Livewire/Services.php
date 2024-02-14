@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Service;
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -13,6 +14,8 @@ use Livewire\WithPagination;
 class Services extends Component
 {
     use WithPagination;
+
+    public User $user;
 
     public $service;
 
@@ -35,6 +38,9 @@ class Services extends Component
 
     public $showDeleteModal = false;
 
+    public $search = '';
+
+
     public function rules(): array
     {
         return [
@@ -49,6 +55,7 @@ class Services extends Component
 
     public function mount(Service $service): void
     {
+        $this->user = auth()->user();
 //        $this->service = $this->makeBlackService();
         $this->service = $service;
         // Retrieve the value directly
@@ -115,13 +122,30 @@ class Services extends Component
         $this->dispatch("notify", "Service deleted!");
     }
 
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
 
+    protected function applySearch($query)
+    {
+        return $this->search === ''
+            ? $query
+            : $query
+                ->where('name', 'like', '%'.$this->search.'%')
+                ->orWhere('price', 'like', '%'.$this->search.'%');
+    }
 
     public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
+        $query = $this->user->services();
+
+        $query = $this->applySearch($query);
+
+
         return view('livewire.services',
             [
-                'services' => Service::where("user_id", auth()->id())->paginate(5),
+                'services' => $query->paginate(5),
                 'customerServices' => Service::query('name', 'description', 'price', 'estimated_hours', 'estimated_minutes', 'extra_description')->get(),
             ]);
     }
