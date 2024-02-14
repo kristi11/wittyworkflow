@@ -1,6 +1,4 @@
 <div>
-
-
     <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mr-3">
         <div class="relative text-sm text-gray-800">
             <div class="absolute pl-2 left-0 top-0 bottom-0 flex items-center pointer-events-none text-gray-500">
@@ -11,10 +9,6 @@
         </div>
 
         <div class="flex justify-end col-span-2">
-
-            {{--        <p class="bg-gray-200 flex justify-center mb-6 p-6 rounded-lg shadow-md text-gray-700 w-9/12">--}}
-            {{--            {{ __('Please provide what services your business offers ') }}--}}
-            {{--        </p>--}}
             <x-button class="my-2 hidden md:block" wire:click="addService">
                 Add Service
             </x-button>
@@ -25,26 +19,26 @@
         {{--Services table--}}
         <x-table.table>
             <x-slot name="head">
-                <x-table.table-heading class="px-6 py-6">
+                <x-table.table-heading class="p-6">
                     {{ __('Service name') }}
                 </x-table.table-heading>
-                <x-table.table-heading class="px-6 py-6">
-                    {{ __('Service Description') }}
+                <x-table.table-heading class="p-6">
+                    {{ __('Service Desc.') }}
                 </x-table.table-heading>
-                <x-table.table-heading class="px-6 py-6">
+                <x-table.table-heading class="p-6">
                     {{ __('Price') }}
                 </x-table.table-heading>
-                <x-table.table-heading class="px-6 py-6">
+                <x-table.table-heading class="p-6">
                     {{ __('Est. Hours') }}
                 </x-table.table-heading>
-                <x-table.table-heading class="px-6 py-6">
+                <x-table.table-heading class="p-6">
                     {{ __('Est. Minutes') }}
                 </x-table.table-heading>
-                <x-table.table-heading class="px-6 py-6">
+                <x-table.table-heading class="p-6">
                     {{ __('Extra Desc.') }}
                 </x-table.table-heading>
-                <x-table.table-heading class="px-6 py-6 flex justify-center">
-                    {{ __('Actions') }}
+                <x-table.table-heading class="flex justify-center">
+                {{--Dropdown menu--}}
                 </x-table.table-heading>
             </x-slot>
             <x-slot name="body">
@@ -52,31 +46,52 @@
                     <tr class="bg-white border-b dark:bg-gray-700"
                         wire:loading.class.delay="opacity-50 dark:opacity-95" wire:key="{{ $service->id }}">
                         <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
-                            {{ $service->name }}
+                            {{ Str::words($service->name, 2, '...') }}
                         </td>
                         <td class="py-4 text-gray-900 dark:text-gray-200">
-                            {{Str::words($service->description, 5, '...')}}
+                            {{Str::words($service->description, 3, '...')}}
                         </td>
                         <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
                             {{ '$ '.$service->price }}
                         </td>
                         <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
-                            {{ $service->estimated_hours }}
+                            {{ $service->estimated_hours.' hours' }}
                         </td>
                         <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
-                            {{ $service->estimated_minutes }}
+                            {{ $service->estimated_minutes.' minutes' }}
                         </td>
                         <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
                             {{Str::words($service->extra_description, 3, '...')}}
                         </td>
-                        <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
-                            <div class="flex justify-end">
-                                <x-secondary-button wire:click="editService({{ $service->id }})" class="mr-2">Edit
-                                </x-secondary-button>
 
-                                <x-danger-button wire:click="delete({{ $service->id }})" wire:confirm="Are you sure you want to delete this service?" >
-                                    Delete
-                                </x-danger-button>
+                        <td class="whitespace-nowrap p-3 text-sm">
+                            <div class="flex items-center justify-end">
+                                <x-menu>
+                                    <x-menu.button class="rounded hover:bg-gray-100">
+                                        <x-icons.ellipsis-horizontal />
+                                    </x-menu.button>
+
+                                    <x-menu.items>
+                                        <x-menu.close>
+                                            <x-menu.item class="flex items-center"
+                                                wire:click="editService({{ $service->id }})"
+                                            >
+                                                <x-icons.edit/>
+                                                Edit
+                                            </x-menu.item>
+                                        </x-menu.close>
+
+                                        <x-menu.close>
+                                            <x-menu.item
+                                                wire:click="delete({{ $service->id }})"
+                                                wire:confirm="Are you sure you want to delete this service?"
+                                            >
+                                                <x-icons.delete/>
+                                                Delete
+                                            </x-menu.item>
+                                        </x-menu.close>
+                                    </x-menu.items>
+                                </x-menu>
                             </div>
                         </td>
                     </tr>

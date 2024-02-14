@@ -1,5 +1,5 @@
-<table class="w-full font-medium text-left text-gray-500 " style="white-space: nowrap">
-    <thead class="bg-gray-200 font-semibold text-gray-500">
+<table class="w-full text-left" style="white-space: nowrap">
+    <thead class="uppercase bg-gray-50 border-gray-300 font-bold text-gray-900">
     <tr>
         {{ $head }}
     </tr>
