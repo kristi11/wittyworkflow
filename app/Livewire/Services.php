@@ -35,6 +35,8 @@ class Services extends Component
 
     public $showDeleteModal = false;
 
+    public $flexiblePricing;
+
     public $search = '';
 
     public function rules(): array

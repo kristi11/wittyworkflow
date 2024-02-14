@@ -15,10 +15,13 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Mail;
 
 class Appointments extends Component
 {
+    use withPagination;
+
     public $appointment;
     public $name;
     public $date;
@@ -30,10 +33,9 @@ class Appointments extends Component
     public $client_message;
     public $client_referer;
     public $appointmentsVisibility;
-
     public bool $readonly = true;
-
     public $showAppointmentsModal = false;
+    public  $search = '';
 
     protected $rules = [
         'name' => 'required|string',
@@ -194,33 +196,56 @@ class Appointments extends Component
         $this->dispatch('notify', 'Appointment cancelled!');
     }
 
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
+
+    protected function applySearch($query)
+    {
+        return $this->search === ''
+            ? $query
+            : $query
+                ->where('name', 'like', '%'.$this->search.'%');
+    }
+
+    protected function applyAdminSearch($query)
+    {
+        return $this->search === ''
+            ? $query
+            : $query
+                ->where('name', 'like', '%'.$this->search.'%')
+                ->orWhere('date', 'like', '%'.$this->search.'%')
+                ->orWhere('appointment_time', 'like', '%'.$this->search.'%')
+                ->orWhere('appointment_status', 'like', '%'.$this->search.'%')
+                ->orWhere('client_name', 'like', '%'.$this->search.'%')
+                ->orWhere('client_email', 'like', '%'.$this->search.'%')
+                ->orWhere('client_phone', 'like', '%'.$this->search.'%')
+                ->orWhere('client_message', 'like', '%'.$this->search.'%')
+                ->orWhere('client_referer', 'like', '%'.$this->search.'%');
+    }
 
     public function render(): Factory|View|Application
     {
+        $adminQuery = Appointment::query(
+            'name',
+            'date',
+            'appointment_time',
+            'appointment_status',
+            'client_name',
+            'client_email',
+            'client_phone',
+            'client_message',
+            'client_referer'
+        );
+        $adminQuery = $this->applyAdminSearch($adminQuery);
+
+        $query = Appointment::query()->where('user_id', auth()->id());
+        $query = $this->applySearch($query);
+
         return view('livewire.appointments', [
-            'appointments' => Appointment::query(
-                'name',
-                'date',
-                'appointment_time',
-                'appointment_status',
-                'client_name',
-                'client_email',
-                'client_phone',
-                'client_message',
-                'client_referer'
-            )->paginate(10),
-            'userAppointments' => Appointment::query(
-                'name',
-                'date',
-                'appointment_time',
-                'appointment_status',
-                'client_name',
-                'client_email',
-                'client_phone',
-                'client_message',
-                'client_referer'
-            )->where('user_id', auth()->id())
-                ->paginate(10),
+            'appointments' => $adminQuery->paginate(10),
+            'userAppointments' => $query->paginate(10),
             'services' => Service::get('name'),
         ]);
     }

@@ -1,23 +1,27 @@
 <div>
-    <div class="flex justify-evenly">
-        <p class="bg-gray-200 flex justify-center mb-6 p-6 rounded-lg shadow-md text-gray-700 w-9/12 dark:bg-gray-800 dark:text-gray-400">
-            {{ __('Here you can manage your appointments') }}
-        </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mr-3">
+        <div class="relative text-sm text-gray-800">
+            <div class="absolute pl-2 left-0 top-0 bottom-0 flex items-center pointer-events-none text-gray-500">
+                <x-icons.magnifying-glass />
+            </div>
+
+            <x-input wire:model.live="search" type="text" placeholder="Search by any table field" class="block ml-2 mr-2 my-2 w-full rounded-lg border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+        </div>
     </div>
     <div class="overflow-y-auto shadow-md sm:rounded-lg ml-2 mr-2 rounded-md">
         <x-table.table>
             <x-slot name="head">
                 <x-table.table-heading class="px-6 py-6">
-                    {{ __('Appointment name') }}
+                    {{ __('Apt. name') }}
                 </x-table.table-heading>
                 <x-table.table-heading class="px-6 py-6">
-                    {{ __('Appointment date') }}
+                    {{ __('Apt. date') }}
                 </x-table.table-heading>
                 <x-table.table-heading class="px-6 py-6">
-                    {{ __('Appointment time') }}
+                    {{ __('Apt. time') }}
                 </x-table.table-heading>
                 <x-table.table-heading class="px-6 py-6">
-                    {{ __('Appointment status') }}
+                    {{ __('Apt. status') }}
                 </x-table.table-heading>
                 <x-table.table-heading class="px-6 py-6">
                     {{ __('Client name') }}
@@ -35,7 +39,7 @@
                     {{ __('Client Referer') }}
                 </x-table.table-heading>
                 <x-table.table-heading class="px-6 py-6">
-                    {{ __('Actions') }}
+                    {{--Dropdown menu--}}
                 </x-table.table-heading>
             </x-slot>
             <x-slot name="body">
@@ -92,9 +96,24 @@
                                         {{ __('Appointment cancelled') }}
                                     </p>
                                 @else
-                                    <x-secondary-button wire:click="editStatus({{ $appointment->id }})" class="mr-3">
-                                        {{ __('Update Status') }}
-                                    </x-secondary-button>
+                                    <div class="flex items-center justify-end">
+                                        <x-menu>
+                                            <x-menu.button class="rounded hover:bg-gray-100">
+                                                <x-icons.ellipsis-horizontal />
+                                            </x-menu.button>
+
+                                            <x-menu.items>
+                                                <x-menu.close>
+                                                    <x-menu.item class="flex items-center"
+                                                                 wire:click="editStatus({{ $appointment->id }})"
+                                                    >
+                                                        <x-icons.edit/>
+                                                        Update status
+                                                    </x-menu.item>
+                                                </x-menu.close>
+                                            </x-menu.items>
+                                        </x-menu>
+                                    </div>
                                 @endif
                             </div>
                         </td>
@@ -111,7 +130,12 @@
             </x-slot>
         </x-table.table>
     </div>
+    {{--Paginate links--}}
+    <div class="pt-4 flex justify-between items-center">
+        <div class="text-gray-700 text-sm ml-3 mr-3">
+            Appointments: {{ $appointments->total() }}
+        </div>
+        {{ $appointments->links(data : ['scrollTo' => false]) }}
+    </div>
     @include('components.appointments.admin-appointments-form')
-    {{ $appointments->links() }}
-</div>
 </div>
