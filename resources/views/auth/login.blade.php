@@ -25,7 +25,7 @@
 
                             <p class="text-sm"><b>Email:</b> staff@example.com</p>
                             <p class="text-sm border-b-2"><b>Password:</b> password</p>
-                            <p class="text-sm mt-4">Or you can <a href="{{route('register')}}" class="text-indigo-600">create</a> a new customer account. The website's content undergoes a scheduled reset every 10 minutes, a deliberate measure taken to uphold the continuity of a standardized demonstration environment.</p>
+                            <p class="text-sm mt-4">Or you can <a href="{{route('register')}}" class="text-indigo-600">create</a> a new customer account. The website's content undergoes a scheduled reset every hour, a deliberate measure taken to uphold the continuity of a standardized demonstration environment.</p>
                     </div>
                 </div>
             </div>
