@@ -15,10 +15,6 @@
         </div>
     @else
         <div class="flex justify-end mr-3">
-
-            {{--        <p class="bg-gray-200 flex justify-center mb-6 p-6 rounded-lg shadow-md text-gray-700 w-9/12">--}}
-            {{--            {{ __('Please provide your business\'s hours') }}--}}
-            {{--        </p>--}}
             <x-button class="mb-5" wire:click="addHours">
                 Add Hours
             </x-button>
@@ -40,7 +36,7 @@
                         {{ __('Status') }}
                     </x-table.table-heading>
                     <x-table.table-heading class="flex justify-center px-6 py-6">
-                        {{ __('Actions') }}
+                    {{--Dropdown menu--}}
                     </x-table.table-heading>
                 </x-slot>
                 <x-slot name="body">
@@ -52,33 +48,54 @@
                             </td>
                             <td class="py-4 text-gray-900 dark:text-gray-200">
                                 @if($hours->open_from == null)
-                                    {{ __('Closed') }}
+                                    <p class="text-red-600">{{ __('Closed') }}</p>
                                 @else
-                                    {{ \Carbon\Carbon::parse($hours->open_from)->format('g:i A') }}
+                                    <p class="text-indigo-600">{{ \Carbon\Carbon::parse($hours->open_from)->format('g:i A') }}</p>
                                 @endif
                             </td>
                             <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
                                 @if($hours->open_from == null)
-                                    {{ __('Closed') }}
+                                    <p class="text-red-600">{{ __('Closed') }}</p>
                                 @else
-                                    {{ \Carbon\Carbon::parse($hours->open_until)->format('g:i A') }}
+                                    <p class="text-indigo-600">{{ \Carbon\Carbon::parse($hours->open_until)->format('g:i A') }}</p>
                                 @endif
                             </td>
                             <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
                                 @if($hours->open)
-                                    Open
+                                    <p class="text-green-600">Open</p>
                                 @else
-                                    Closed
+                                    <p class="text-red-600">Closed</p>
                                 @endif
                             </td>
                             <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
                                 <div class="flex justify-center">
-                                    <x-secondary-button wire:click="edit({{ $hours->id }})" class="mr-3">
-                                        {{ __('Edit') }}
-                                    </x-secondary-button>
-                                    <x-danger-button wire:click="delete({{ $hours->id }})" wire:confirm="Are you sure you want to delete?">
-                                        {{ __('Delete') }}
-                                    </x-danger-button>
+                                    <div class="flex items-center justify-end">
+                                        <x-menu>
+                                            <x-menu.button class="rounded hover:bg-gray-100">
+                                                <x-icons.ellipsis-horizontal />
+                                            </x-menu.button>
+
+                                            <x-menu.items>
+                                                <x-menu.close>
+                                                    <x-menu.item class="flex items-center"
+                                                                 wire:click="edit({{ $hours->id }})"
+                                                    >
+                                                        <x-icons.edit/>
+                                                        Edit
+                                                    </x-menu.item>
+                                                </x-menu.close>
+                                                <x-menu.close>
+                                                    <x-menu.item class="flex items-center"
+                                                                 wire:click="delete({{ $hours->id }})"
+                                                                 wire:confirm="Are you sure you want to delete this business hour?"
+                                                    >
+                                                        <x-icons.delete/>
+                                                        Delete
+                                                    </x-menu.item>
+                                                </x-menu.close>
+                                            </x-menu.items>
+                                        </x-menu>
+                                    </div>
                                 </div>
                             </td>
                         </tr>

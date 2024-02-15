@@ -26,30 +26,23 @@ class BusinessHours extends Component
     public function rules(): array
     {
         $rules = [
-            'day' => 'required|in:' . implode(',', array_keys(Functionality::WEEK_DAYS)),
+            'day' => [
+                'required',
+                'in:' . implode(',', array_keys(Functionality::WEEK_DAYS)),
+            ],
             'open' => 'required|in:' . implode(',', array_keys(Functionality::IS_OPEN)),
         ];
 
         // Add a custom rule for creating a new record with a unique day
         if (!$this->businessHour->exists) {
-            $rules['day'] = [
-                'required',
-                'in:' . implode(',', array_keys(Functionality::WEEK_DAYS)),
-                Rule::unique('business_hours', 'day')->where(function ($query) {
-                    return $query->where('user_id', auth()->user()->id);
-                })
-            ];
-        }
-
-        // Custom rule to check uniqueness when the 'day' is changing
-        if ($this->businessHour->exists && $this->day !== $this->businessHour->day) {
-            $rules['day'] = [
-                'required',
-                'in:' . implode(',', array_keys(Functionality::WEEK_DAYS)),
-                Rule::unique('business_hours', 'day')->where(function ($query) {
-                    return $query->where('user_id', auth()->user()->id);
-                })
-            ];
+            $rules['day'][] = Rule::unique('business_hours', 'day')->where(function ($query) {
+                return $query->where('user_id', auth()->user()->id);
+            });
+        } else {
+            // Custom rule to check uniqueness when the 'day' is changing
+            $rules['day'][] = Rule::unique('business_hours', 'day')->ignore($this->businessHour->id)->where(function ($query) {
+                return $query->where('user_id', auth()->user()->id);
+            });
         }
 
         // Add conditional rules for 'open_from' and 'open_until' based on the 'open' field
@@ -63,6 +56,7 @@ class BusinessHours extends Component
 
         return $rules;
     }
+
 
 
     public function messages(): array

@@ -225,7 +225,10 @@
 
         <p class="flex gap-1 leading-relaxed mt-4 text-gray-500 text-sm">
             @forelse($galleries as $gallery)
-                <img class="h-8 w-8 object-cover rounded-full" src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="{{ $gallery->path }}">
+                {{--This image link is only for demonstration purposes. The correct link is the one below--}}
+                <img class="h-8 w-8 object-cover rounded-full" src="{{ asset('services.jpg') }}">
+                {{--The commented image link below is the correct one--}}
+                {{--<img class="h-8 w-8 object-cover rounded-full" src="{{ Storage::disk('serviceImages')->url($gallery->path) }}" alt="{{ $gallery->path }}">--}}
             @empty
                 <span class="dark:text-gray-200">{{ 'You haven\'t uploaded any images' }}</span>
             @endforelse

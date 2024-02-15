@@ -19,7 +19,7 @@
                     {{ __('Image') }}
                 </x-table.table-heading>
                 <x-table.table-heading class="flex justify-center px-6 py-6">
-                    {{ __('Actions') }}
+                    {{--Dropdown menu--}}
                 </x-table.table-heading>
             </x-slot>
             <x-slot name="body">
@@ -47,10 +47,10 @@
                     <tr class="bg-white border-b dark:bg-gray-700"
                         wire:loading.class.delay="opacity-50 dark:opacity-95" wire:key="{{ $gallery->id }}">
                         <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
-                            {{ ucwords($gallery->applied_to) }}
+                            {{ Str::words(ucwords($gallery->applied_to),2) }}
                         </td>
                         <td class="py-4 text-gray-900 dark:text-gray-200">
-                            {{ Str::words(ucwords($gallery->description),3) }}
+                            {{ Str::words(ucwords($gallery->description),2) }}
                         </td>
                         <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
                             <a href="#" wire:click="expandImage({{ $gallery->id }})">
@@ -65,12 +65,33 @@
                         </td>
                         <td class="px-6 py-4 text-gray-900 dark:text-gray-200">
                             <div class="flex justify-center">
-                                <x-secondary-button wire:click="edit({{ $gallery->id }})" class="mr-3">
-                                    {{ __('Edit') }}
-                                </x-secondary-button>
-                                <x-danger-button wire:click="delete({{ $gallery->id }})" wire:confirm="Are you sure you want to delete?">
-                                    {{ __('Delete') }}
-                                </x-danger-button>
+                                <div class="flex items-center justify-end">
+                                    <x-menu>
+                                        <x-menu.button class="rounded hover:bg-gray-100">
+                                            <x-icons.ellipsis-horizontal />
+                                        </x-menu.button>
+
+                                        <x-menu.items>
+                                            <x-menu.close>
+                                                <x-menu.item class="flex items-center"
+                                                             wire:click="edit({{ $gallery->id }})"
+                                                >
+                                                    <x-icons.edit/>
+                                                    Edit
+                                                </x-menu.item>
+                                            </x-menu.close>
+                                            <x-menu.close>
+                                                <x-menu.item class="flex items-center"
+                                                             wire:click="delete({{ $gallery->id }})"
+                                                             wire:confirm="Are you sure you want to delete this image?"
+                                                >
+                                                    <x-icons.delete/>
+                                                    Delete
+                                                </x-menu.item>
+                                            </x-menu.close>
+                                        </x-menu.items>
+                                    </x-menu>
+                                </div>
                             </div>
                         </td>
                     </tr>

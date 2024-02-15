@@ -1,9 +1,4 @@
 <div>
-    <div class="flex justify-evenly invisible md:visible">
-        <p class="bg-gray-200 flex justify-center mb-0 p-0 md:mb-6 md:p-6 rounded-lg shadow-md text-gray-700 w-9/12 dark:bg-gray-800  dark:text-gray-400">
-            {{ __('Please provide your business\'s address ') }}
-        </p>
-    </div>
     <div class="bg-white overflow-y-auto shadow-md sm:rounded-lg ml-2 mr-2 rounded-md">
         <x-table.table>
             <x-slot name="head">
@@ -54,8 +49,24 @@
                         </td>
                         <td class="px-6 py-4 text-gray-900 dark:text-gray-300">
                             <div class="flex justify-end">
-                                <x-secondary-button wire:click="editAddress({{ $addresses->id }})" class="mr-2">Edit
-                                </x-secondary-button>
+                                <div class="flex items-center justify-end">
+                                    <x-menu>
+                                        <x-menu.button class="rounded hover:bg-gray-100">
+                                            <x-icons.ellipsis-horizontal />
+                                        </x-menu.button>
+
+                                        <x-menu.items>
+                                            <x-menu.close>
+                                                <x-menu.item class="flex items-center"
+                                                             wire:click="editAddress({{ $addresses->id }})"
+                                                >
+                                                    <x-icons.edit/>
+                                                    Edit
+                                                </x-menu.item>
+                                            </x-menu.close>
+                                        </x-menu.items>
+                                    </x-menu>
+                                </div>
                             </div>
                         </td>
                     </tr>
