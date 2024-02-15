@@ -12,14 +12,16 @@ class BusinessHourFactory extends Factory
 
     public function definition(): array
     {
+        $open = $this->faker->boolean();
+
         return [
             'user_id' => '1',
             'day' => $this->faker->unique()->dayOfWeek(),
-            'open_from' => $this->faker->time($format = 'h:i A'),
-            'open_until' => $this->faker->time($format = 'h:i A', $max = '12:00 PM'),
-            'open' => $this->faker->boolean(),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+            'open' => $open,
+            'open_from' => $open ? $this->faker->time() : null,
+            'open_until' => $open ? $this->faker->time() : null,
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }
