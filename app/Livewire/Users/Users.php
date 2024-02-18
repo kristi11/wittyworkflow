@@ -34,21 +34,11 @@ class Users extends Component
         ];
     }
 
-    public function mount()
+    public function mount(): void
     {
         $this->user = new User(); // Initialize the user property with a User instance, or load it from your data source
     }
 
-//    public function mount()
-//    {
-//        $this->user = new User(); // Initialize the user property with a User instance, or load it from your data source
-//    }
-
-//    public function edit(User $user)
-//    {
-//        $this->user = $user;
-//        $this->showEditModal = true;
-//    }
 
     public function edit(User $user)
     {
@@ -57,35 +47,29 @@ class Users extends Component
         $this->role = $user->role;
         $this->showEditModal = true;
     }
-//
-//    #[On('saved')]
-//    public function save()
-//    {
-//        $this->validate();
-//        $this->user->save();
-//        $this->showEditModal = false;
-//        $this->dispatch('notify', $this->user->name.'\'s'.' role changed to '.$this->user->role.'.');
-//    }
 
     #[On('saved')]
-    public function save()
+    public function save(): void
+    {
+        $this->commitSave();
+    }
+
+    protected function commitSave(): void
     {
         $this->validate();
 
 
-            // Update the selected user's role with the selected role
-            $this->user->role = $this->role;
-            $this->user->save();
+        // Update the selected user's role with the selected role
+        $this->user->role = $this->role;
+        $this->user->save();
 
-            // Close the edit modal
-            $this->showEditModal = false;
+        // Close the edit modal
+        $this->showEditModal = false;
 
-            // Notify the user about the role change
-            $this->dispatch('notify', $this->user->name . '\'s role changed to ' . $this->role . '.');
+        // Notify the user about the role change
+        $this->dispatch('notify', $this->user->name . '\'s role changed to ' . $this->role . '.');
 
     }
-
-
 
 
     public function render(): Factory|View|Application
