@@ -40,7 +40,7 @@ class Users extends Component
     }
 
 
-    public function edit(User $user)
+    public function edit(User $user): void
     {
         // Set the selected user and their role for editing
         $this->user = $user;
