@@ -15,10 +15,12 @@ use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class Dashboard extends Component
 {
+    #[Locked]
     public $appointmentsVisibility;
     public $alwaysOpen;
     public $flexiblePricing;

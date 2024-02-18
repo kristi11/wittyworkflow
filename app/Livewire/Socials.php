@@ -62,6 +62,7 @@ class Socials extends Component
 
     public function save(): void
     {
+        $this->authorize("save", $this->social);
         $this->validate();
 
         $existingSocial = Social::where('user_id', auth()->user()->id)->first();

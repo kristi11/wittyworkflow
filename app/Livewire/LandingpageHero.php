@@ -100,6 +100,7 @@ public $image;
     #[On('saved')]
     public function save(): void
     {
+        $this->authorize("save", $this->hero);
         $this->validate();
         $user = auth()->user();
         $this->hero->user_id = $user->id;

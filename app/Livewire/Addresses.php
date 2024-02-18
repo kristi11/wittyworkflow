@@ -54,6 +54,7 @@ class Addresses extends Component
 
     public function save(): void
     {
+        $this->authorize('save', $this->address);
         $this->validate();
 
         $this->address->user_id = auth()->user()->id;

@@ -116,6 +116,7 @@ class BusinessHours extends Component
 
     public function delete(BusinessHour $businessHour): void
     {
+        $this->authorize('delete', $businessHour);
         BusinessHour::find($businessHour->id)->delete();
         $this->dispatch('notify', 'Business hour deleted');
     }
@@ -133,6 +134,7 @@ class BusinessHours extends Component
 
     public function save(): void
     {
+        $this->authorize('save', $this->businessHour);
         $this->validate();
         $this->businessHour->user_id = auth()->user()->id;
 

@@ -14,14 +14,18 @@ use Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Mail;
 
+
 class Appointments extends Component
 {
-    use withPagination;
 
+
+    use withPagination;
+    #[Locked]
     public $appointment;
     public $name;
     public $date;
@@ -159,6 +163,7 @@ class Appointments extends Component
 
     public function changeStatus(): void
     {
+        $this->authorize('changeStatus', $this->appointment);
         Appointment::find($this->appointment->id)->update(['appointment_status' => $this->appointment_status]);
         $adminUsers = User::where('role', 'admin')->get();
 
@@ -182,6 +187,7 @@ class Appointments extends Component
 
     public function delete(Appointment $appointment): void
     {
+        $this->authorize('delete', $appointment);
         // Get the admin users
         $adminUsers = User::where('role', 'admin')->get();
 

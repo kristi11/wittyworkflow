@@ -89,6 +89,7 @@ class Galleries extends Component
 
     public function save(): void
     {
+        $this->authorize('save', $this->gallery);
         $this->editing = false;
 
         $this->validate();
@@ -124,6 +125,7 @@ class Galleries extends Component
 
     public function delete(Gallery $gallery): void
     {
+        $this->authorize('delete', $gallery);
         $gallery->delete();
         Storage::disk('s3-public')->delete($gallery->path);
         $this->showGalleryModal = false;

@@ -96,6 +96,7 @@ class Services extends Component
 
     public function save(): void
     {
+        $this->authorize('save', $this->service);
         $this->validate();
 
         $this->service->user_id = auth()->id();
@@ -113,6 +114,7 @@ class Services extends Component
 
     public function delete($id): void
     {
+        $this->authorize('delete', $this->service);
         $this->deleteId = $id;
         Service::find($id)->delete();
         $this->dispatch("notify", "Service deleted!");
