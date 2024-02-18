@@ -45,6 +45,7 @@ class Seos extends Component
 
     public function save(): void
     {
+        $this->authorize("save", $this->seo);
         $this->validate();
         $user = auth()->user();
         $this->seo->user_id = $user->id;
@@ -73,6 +74,7 @@ class Seos extends Component
 
     public function delete(Seo $seo): void
     {
+        $this->authorize("delete", $seo);
         // Delete the Seo model instance
         $seo->delete();
         $this->dispatch("notify", "SEO deleted!");
