@@ -19,6 +19,7 @@
     <meta name="description" content="{{ isset($seo) && $seo->description !== null && $seo->description !== '' ? $seo->description : '' }}" />
     <meta name="keywords" content="" />
     <link rel="manifest" href="/manifest.json">
+    <link rel="service-worker" href="/js/pwabuilder-sw.js">
     <meta name="author" content="kristi tanellari" />
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
     <!--Replace with your tailwind.css once created-->

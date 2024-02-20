@@ -534,6 +534,9 @@ class ManifestService
                     "type" => "image/png"
                 ]
             ],
+                    "edge_side_panel" => [
+                        "preferred_width"=> 400
+                    ]
             ];
 
 
