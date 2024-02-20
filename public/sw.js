@@ -28,15 +28,9 @@ const checkResponse = function (request) {
 
 const addToCache = function (request) {
     return caches.open("offline").then(function (cache) {
-        // Check if the request URL uses the "http" or "https" schemes
-        if (request.url.startsWith('http') || request.url.startsWith('https')) {
-            // If the request uses a supported scheme, proceed with caching
-            return fetch(request).then(function (response) {
-                return cache.put(request, response);
-            });
-        }
-        // If the request uses an unsupported scheme, skip caching
-        return Promise.resolve();
+        return fetch(request).then(function (response) {
+            return cache.put(request, response);
+        });
     });
 };
 
