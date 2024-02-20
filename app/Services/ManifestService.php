@@ -539,7 +539,6 @@ class ManifestService
                     ]
             ];
 
-
         return json_encode($manifest, JSON_PRETTY_PRINT); // Using JSON_PRETTY_PRINT for better readability
     }
 }

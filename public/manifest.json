@@ -11,9 +11,17 @@
     "theme_color": "#6777ef",
     "id": "1491",
     "lang": "en",
+    "prefer_related_applications": false,
+    "handle_links": "non-preferred",
     "display_override": [
         "window-controls-overlay"
     ],
+    "edge_side_panel": {
+        "preferred_width": 400
+    },
+    "launch_handler": {
+        "client_mode": ["navigate-existing", "auto"]
+    },
     "categories": [
         "business"
     ],
