@@ -1,54 +1,56 @@
-// This is the service worker with the combined offline experience (Offline page + Offline copy of pages)
+const preLoad = function () {
+    return caches.open("offline").then(function (cache) {
+        // caching index and important routes
+        return cache.addAll(filesToCache);
+    });
+};
 
-const CACHE = "pwabuilder-offline-page";
-
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
-
-// TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
-const offlineFallbackPage = "ToDo-replace-this-name.html";
-
-self.addEventListener("message", (event) => {
-    if (event.data && event.data.type === "SKIP_WAITING") {
-        self.skipWaiting();
-    }
+self.addEventListener("install", function (event) {
+    event.waitUntil(preLoad());
 });
 
-self.addEventListener('install', async (event) => {
-    event.waitUntil(
-        caches.open(CACHE)
-            .then((cache) => cache.add(offlineFallbackPage))
-    );
-});
+const filesToCache = [
+    '/',
+    '/offline.html'
+];
 
-if (workbox.navigationPreload.isSupported()) {
-    workbox.navigationPreload.enable();
-}
-
-workbox.routing.registerRoute(
-    new RegExp('/*'),
-    new workbox.strategies.StaleWhileRevalidate({
-        cacheName: CACHE
-    })
-);
-
-self.addEventListener('fetch', (event) => {
-    if (event.request.mode === 'navigate') {
-        event.respondWith((async () => {
-            try {
-                const preloadResp = await event.preloadResponse;
-
-                if (preloadResp) {
-                    return preloadResp;
-                }
-
-                const networkResp = await fetch(event.request);
-                return networkResp;
-            } catch (error) {
-
-                const cache = await caches.open(CACHE);
-                const cachedResp = await cache.match(offlineFallbackPage);
-                return cachedResp;
+const checkResponse = function (request) {
+    return new Promise(function (fulfill, reject) {
+        fetch(request).then(function (response) {
+            if (response.status !== 404) {
+                fulfill(response);
+            } else {
+                reject();
             }
-        })());
+        }, reject);
+    });
+};
+
+const addToCache = function (request) {
+    return caches.open("offline").then(function (cache) {
+        return fetch(request).then(function (response) {
+            return cache.put(request, response);
+        });
+    });
+};
+
+const returnFromCache = function (request) {
+    return caches.open("offline").then(function (cache) {
+        return cache.match(request).then(function (matching) {
+            if (!matching || matching.status === 404) {
+                return cache.match("offline.html");
+            } else {
+                return matching;
+            }
+        });
+    });
+};
+
+self.addEventListener("fetch", function (event) {
+    event.respondWith(checkResponse(event.request).catch(function () {
+        return returnFromCache(event.request);
+    }));
+    if(!event.request.url.startsWith('http')){
+        event.waitUntil(addToCache(event.request));
     }
 });
