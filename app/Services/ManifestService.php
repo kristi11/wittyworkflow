@@ -482,6 +482,58 @@ class ManifestService
                     "sizes" => "1024x1024"
                 ]
             ],
+            "screenshots" => [
+                [
+                    "src" => "Screenshots/1.png",
+                    "sizes" => "1280x720",
+                    "type" => "image/png"
+                ],
+                [
+                    "src" => "Screenshots/2.png",
+                    "sizes" => "1280x720",
+                    "type" => "image/png"
+                ],
+                [
+                    "src" => "Screenshots/3.png",
+                    "sizes" => "1280x720",
+                    "type" => "image/png"
+                ],
+                [
+                    "src" => "Screenshots/4.png",
+                    "sizes" => "1280x720",
+                    "type" => "image/png"
+                ],
+                [
+                    "src" => "Screenshots/5.png",
+                    "sizes" => "1280x720",
+                    "type" => "image/png"
+                ],
+                [
+                    "src" => "Screenshots/6.png",
+                    "sizes" => "1280x720",
+                    "type" => "image/png"
+                ],
+                [
+                    "src" => "Screenshots/7.png",
+                    "sizes" => "1280x720",
+                    "type" => "image/png"
+                ],
+                [
+                    "src" => "Screenshots/8.png",
+                    "sizes" => "1280x720",
+                    "type" => "image/png"
+                ],
+                [
+                    "src" => "Screenshots/9.png",
+                    "sizes" => "1280x720",
+                    "type" => "image/png"
+                ],
+                [
+                    "src" => "Screenshots/10.png",
+                    "sizes" => "1280x720",
+                    "type" => "image/png"
+                ]
+            ],
             ];
 
 
