@@ -50,25 +50,7 @@ self.addEventListener("fetch", function (event) {
     event.respondWith(checkResponse(event.request).catch(function () {
         return returnFromCache(event.request);
     }));
-    if(!event.request.url.startsWith('http')){
+    if (!event.request.url.startsWith('http') && !event.request.url.startsWith('chrome-extension')) {
         event.waitUntil(addToCache(event.request));
     }
 });
-
-self.addEventListener("install", function (event) {
-    console.log("Service Worker: Installed");
-    event.waitUntil(preLoad());
-});
-
-self.addEventListener("activate", function (event) {
-    console.log("Service Worker: Activated");
-});
-
-navigator.serviceWorker.register('/sw.js', { scope: '/' })
-    .then(function(registration) {
-        console.log('Service Worker registered with scope:', registration.scope);
-    })
-    .catch(function(error) {
-        console.error('Service Worker registration failed:', error);
-    });
-
