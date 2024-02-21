@@ -100,6 +100,11 @@ public $image;
     #[On('saved')]
     public function save(): void
     {
+        $this->commitSave();
+    }
+
+    protected function commitSave(): void
+    {
         $this->authorize("save", $this->hero);
         $this->validate();
         $user = auth()->user();
@@ -113,7 +118,6 @@ public $image;
         $this->hero->gradientSecondColor = $this->gradientSecondColor;
         $this->hero->gradientDegreeEnd = $this->gradientDegreeEnd;
         $this->hero->waves = $this->waves;
-
 
         $newImageUploaded = false;
         if ($this->image instanceof UploadedFile) {

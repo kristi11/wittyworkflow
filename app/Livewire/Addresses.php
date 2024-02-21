@@ -54,6 +54,11 @@ class Addresses extends Component
 
     public function save(): void
     {
+       $this->commitSave();
+    }
+
+    protected function commitSave(): void
+    {
         $this->authorize('save', $this->address);
         $this->validate();
 
