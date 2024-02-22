@@ -98,12 +98,12 @@ public $image;
     }
 
     #[On('saved')]
-    public function save(): void
-    {
-        $this->commitSave();
-    }
+//    public function save(): void
+//    {
+//        $this->commitSave();
+//    }
 
-    protected function commitSave(): void
+    public function save(): void
     {
         $this->authorize("save", $this->hero);
         $this->validate();

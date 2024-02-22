@@ -132,6 +132,11 @@ class Galleries extends Component
         $this->dispatch('notify', 'Image deleted');
     }
 
+//    public function placeholder(): Factory|View|Application
+//    {
+//        return view('placeholder');
+//    }
+
     public function render(): Factory|View|Application
     {
         return view('livewire.galleries', [
