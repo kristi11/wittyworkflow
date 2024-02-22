@@ -120,7 +120,7 @@ public $image;
         $this->hero->waves = $this->waves;
 
         $newImageUploaded = false;
-        if ($this->image) {
+        if ($this->image instanceof UploadedFile) {
             // Delete the old image file
             Storage::disk('s3-public')->delete($this->hero->image);
 
