@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Models\Service;
 use App\Models\Setting;
-use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -14,29 +13,19 @@ use Livewire\WithPagination;
 class Services extends Component
 {
     use WithPagination;
-
     public $service;
-
     public $name;
-
     public $description;
     public $price;
     public $estimated_hours;
     public $estimated_minutes;
     public $extra_description;
-
     public $showServicesModal = false;
     private $deleteId;
-
     public $appointmentsVisibility;
-
-
     public $showServicesDescriptionModal = false;
-
     public $showDeleteModal = false;
-
     public $flexiblePricing;
-
     public $search = '';
 
     public function rules(): array
@@ -53,9 +42,7 @@ class Services extends Component
 
     public function mount(Service $service): void
     {
-//        $this->service = $this->makeBlackService();
         $this->service = $service;
-        // Retrieve the value directly
         $this->appointmentsVisibility = Setting::value('appointmentsVisibility') ?? false;
     }
 
@@ -84,6 +71,11 @@ class Services extends Component
 
     public function editService(Service $service): void
     {
+      $this->commitEditService($service);
+    }
+
+    protected function commitEditService(Service $service): void
+    {
         $this->service = $service;
         $this->name = $service->name;
         $this->description = $service->description;
@@ -95,6 +87,11 @@ class Services extends Component
     }
 
     public function save(): void
+    {
+        $this->commitSave();
+    }
+
+    protected function commitSave(): void
     {
         $this->authorize('save', $this->service);
         $this->validate();
@@ -114,13 +111,16 @@ class Services extends Component
 
     public function delete($id): void
     {
+        $this->commitDelete($id);
+    }
+
+    protected function commitDelete($id): void
+    {
         $this->authorize('delete', $this->service);
         $this->deleteId = $id;
         Service::find($id)->delete();
         $this->dispatch("notify", "Service deleted!");
     }
-
-
 
     public function updatedSearch(): void
     {
@@ -139,9 +139,7 @@ class Services extends Component
     public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $query = Service::query()->where('user_id', auth()->id());
-
         $query = $this->applySearch($query);
-
 
         return view('livewire.services',
             [

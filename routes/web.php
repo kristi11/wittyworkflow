@@ -22,6 +22,13 @@ Route::get('/', function () {
         'socials' => Social::first(),
     ]);
 });
+Route::get('/manifest.json', function () {
+    $manifestService = app(\App\Services\ManifestService::class);
+    $manifest = $manifestService->generate();
+
+    return response($manifest, 200)
+        ->header('Content-Type', 'application/json');
+});
 
 Route::post('newsletter', NewsletterController::class);
 

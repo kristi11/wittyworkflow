@@ -25,6 +25,7 @@ class Appointments extends Component
 
 
     use withPagination;
+//    Variables --------------------------------------------------------------------------------------------
     #[Locked]
     public $appointment;
     public $name;
@@ -41,6 +42,7 @@ class Appointments extends Component
     public $showAppointmentsModal = false;
     public  $search = '';
 
+    //    Rules --------------------------------------------------------------------------------------------
     protected $rules = [
         'name' => 'required|string',
         'date' => 'required|string',
@@ -56,6 +58,7 @@ class Appointments extends Component
         'client_referer' => 'nullable|string',
     ];
 
+    //    Mount --------------------------------------------------------------------------------------------
     public function mount(): void
     {
         $this->appointment = $this->makeBlankAppointment();
@@ -66,27 +69,44 @@ class Appointments extends Component
         $this->appointmentsVisibility = Setting::value('appointmentsVisibility') ?? false;
     }
 
+    //    Actions --------------------------------------------------------------------------------------------
     public function updated($propertyName): void
     {
         $this->validateOnly($propertyName);
     }
 
-    public function makeBlankAppointment()
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
+
+    //    Blank appointment ---------------------------------------------------------------------------------
+    protected function makeBlankAppointment()
     {
         return Appointment::make();
     }
-
+//    Add appointment ----------------------------------------------------------------------------------------
     public function addAppointment(): void
     {
         $this->appointment = $this->makeBlankAppointment();
         $this->showAppointmentsModal = true;
+    }
+//    Edit appointment ----------------------------------------------------------------------------------------
+    public function edit(Appointment $appointment): void
+    {
+        $this->user_appointments($appointment);
+    }
+
+    public function editStatus(Appointment $appointment): void
+    {
+        $this->user_appointments($appointment);
     }
 
     /**
      * @param Appointment $appointment
      * @return void
      */
-    public function user_appointments(Appointment $appointment): void
+    protected function user_appointments(Appointment $appointment): void
     {
         $this->appointment = $appointment;
 
@@ -103,65 +123,110 @@ class Appointments extends Component
         $this->showAppointmentsModal = true;
     }
 
-    public function edit(Appointment $appointment): void
-    {
-        $this->user_appointments($appointment);
-    }
-
-    public function editStatus(Appointment $appointment): void
-    {
-        $this->user_appointments($appointment);
-    }
-
+    //    save appointment ----------------------------------------------------------------------------------------
     public function save(): void
     {
+        $this->commitSave();
+    }
+
+    protected function commitSave(): void
+    {
         $this->validate();
+        $this->assignAppointmentProperties();
+        $this->appointment->save();
+        $this->sendEmails();
+        $this->showAppointmentsModal = false;
+        $this->dispatch('notify', 'Appointment ' . ($this->isNewAppointment() ? 'created' : 'updated') . '!');
+    }
+
+    private function assignAppointmentProperties(): void
+    {
         $user = Auth::user();
-        $isNewAppointment = !$this->appointment->exists; // Check if the appointment does not exist in the database
-
-        // Get the admin users
-        $adminUsers = User::where('role', 'admin')->get();
-
         $this->appointment->user_id = $user->id;
         $this->appointment->name = $this->name;
         $this->appointment->date = $this->date;
         $this->appointment->appointment_time = $this->appointment_time;
-
-        if ($this->appointment_status == null) {
-            $this->appointment->appointment_status = 'pending';
-        } else {
-            $this->appointment->appointment_status = $this->appointment_status;
-        }
-
+        $this->appointment->appointment_status = $this->appointment_status ?? 'pending';
         $this->appointment->client_name = $user->name;
         $this->appointment->client_email = $user->email;
         $this->appointment->client_phone = $user->phone;
         $this->appointment->client_message = $this->client_message;
         $this->appointment->client_referer = $this->client_referer;
-        $this->appointment->save();
+    }
 
-        // Send a different mailable to the user who created the appointment
-        $userMailable = $isNewAppointment
+    private function isNewAppointment(): bool
+    {
+        return !$this->appointment->exists;
+    }
+
+    private function sendEmails(): void
+    {
+        $adminUsers = User::where('role', 'admin')->get();
+        $userMailable = $this->isNewAppointment()
             ? new NewAppointmentMailable($this->appointment)
             : new UserAppointmentChangeMailable($this->appointment);
 
         Mail::to($this->appointment->client_email)->queue($userMailable);
 
-        // Send a different mailable to the admin users
         foreach ($adminUsers as $adminUser) {
-            $userMailable = $isNewAppointment
-                ? new NewAppointmentMailable($this->appointment)
-                : new UserAppointmentChangeMailable($this->appointment);
-            Mail::to($adminUser->email)->queue($userMailable);
+            Mail::to($adminUser->email)->queue(clone $userMailable);
         }
-
-        $this->showAppointmentsModal = false;
-        $this->dispatch('notify', 'Appointment ' . ($isNewAppointment ? 'created' : 'updated') . '!');
     }
 
+//    This is the original function if you prefer to use it. It is the same as the one above. I just refactored it.
+//    protected function commitSave(): void
+//    {
+//        $this->validate();
+//        $user = Auth::user();
+//        $isNewAppointment = !$this->appointment->exists; // Check if the appointment does not exist in the database
+//
+//        // Get the admin users
+//        $adminUsers = User::where('role', 'admin')->get();
+//
+//        $this->appointment->user_id = $user->id;
+//        $this->appointment->name = $this->name;
+//        $this->appointment->date = $this->date;
+//        $this->appointment->appointment_time = $this->appointment_time;
+//
+//        if ($this->appointment_status == null) {
+//            $this->appointment->appointment_status = 'pending';
+//        } else {
+//            $this->appointment->appointment_status = $this->appointment_status;
+//        }
+//
+//        $this->appointment->client_name = $user->name;
+//        $this->appointment->client_email = $user->email;
+//        $this->appointment->client_phone = $user->phone;
+//        $this->appointment->client_message = $this->client_message;
+//        $this->appointment->client_referer = $this->client_referer;
+//        $this->appointment->save();
+//
+//        // Send a different mailable to the user who created the appointment
+//        $userMailable = $isNewAppointment
+//            ? new NewAppointmentMailable($this->appointment)
+//            : new UserAppointmentChangeMailable($this->appointment);
+//
+//        Mail::to($this->appointment->client_email)->queue($userMailable);
+//
+//        // Send a different mailable to the admin users
+//        foreach ($adminUsers as $adminUser) {
+//            $userMailable = $isNewAppointment
+//                ? new NewAppointmentMailable($this->appointment)
+//                : new UserAppointmentChangeMailable($this->appointment);
+//            Mail::to($adminUser->email)->queue($userMailable);
+//        }
+//
+//        $this->showAppointmentsModal = false;
+//        $this->dispatch('notify', 'Appointment ' . ($isNewAppointment ? 'created' : 'updated') . '!');
+//    }
 
-
+    //    Change status ----------------------------------------------------------------------------------------
     public function changeStatus(): void
+    {
+        $this->commitChangeStatus();
+    }
+
+    protected function commitChangeStatus(): void
     {
         $this->authorize('changeStatus', $this->appointment);
         Appointment::find($this->appointment->id)->update(['appointment_status' => $this->appointment_status]);
@@ -185,38 +250,66 @@ class Appointments extends Component
         $this->showAppointmentsModal = false;
     }
 
+    //    Delete appointment ----------------------------------------------------------------------------------------
     public function delete(Appointment $appointment): void
     {
+        $this->commitDelete($appointment);
+    }
+
+    protected function commitDelete(Appointment $appointment): void
+    {
         $this->authorize('delete', $appointment);
-        // Get the admin users
-        $adminUsers = User::where('role', 'admin')->get();
-
-        Mail::to($appointment->client_email)->queue(new AppointmentDeletedMailable($appointment));
-
-        // Send a different mailable to the admin users
-        foreach ($adminUsers as $adminUser) {
-            Mail::to($adminUser->email)->queue(new AppointmentDeletedMailable($appointment));
-        }
-
+        $this->sendDeleteEmails($appointment);
         $appointment->delete();
         $this->dispatch('notify', 'Appointment cancelled!');
     }
 
-    public function updatedSearch(): void
+    private function sendDeleteEmails(Appointment $appointment): void
     {
-        $this->resetPage();
+        $adminUsers = User::where('role', 'admin')->get();
+
+        Mail::to($appointment->client_email)->queue(new AppointmentDeletedMailable($appointment));
+
+        foreach ($adminUsers as $adminUser) {
+            Mail::to($adminUser->email)->queue(new AppointmentDeletedMailable($appointment));
+        }
     }
 
-    protected function applySearch($query)
+//    protected function commitDelete(Appointment $appointment): void
+//    {
+//        // Get the admin users
+//        $adminUsers = User::where('role', 'admin')->get();
+//
+//        Mail::to($appointment->client_email)->queue(new AppointmentDeletedMailable($appointment));
+//
+//        // Send a different mailable to the admin users
+//        foreach ($adminUsers as $adminUser) {
+//            Mail::to($adminUser->email)->queue(new AppointmentDeletedMailable($appointment));
+//        }
+//
+//        $appointment->delete();
+//        $this->dispatch('notify', 'Appointment cancelled!');
+//    }
+
+    //    Search appointments ----------------------------------------------------------------------------------
+    public function applySearch($query): void
     {
+        $this->commitApplySearch($query);
+    }
+
+    protected function commitApplySearch($query){
         return $this->search === ''
             ? $query
             : $query
                 ->where('name', 'like', '%'.$this->search.'%');
     }
 
-    protected function applyAdminSearch($query)
+    public function applyAdminSearch($query): void
     {
+       $this->commitApplyAdminSearch($query);
+    }
+
+    protected function commitApplyAdminSearch($query){
         return $this->search === ''
             ? $query
             : $query
@@ -230,7 +323,7 @@ class Appointments extends Component
                 ->orWhere('client_message', 'like', '%'.$this->search.'%')
                 ->orWhere('client_referer', 'like', '%'.$this->search.'%');
     }
-
+//    Render ----------------------------------------------------------------------------------------
     public function render(): Factory|View|Application
     {
         $adminQuery = Appointment::query(
@@ -244,10 +337,10 @@ class Appointments extends Component
             'client_message',
             'client_referer'
         );
-        $adminQuery = $this->applyAdminSearch($adminQuery);
+        $adminQuery = $this->commitApplyAdminSearch($adminQuery);
 
         $query = Appointment::query()->where('user_id', auth()->id());
-        $query = $this->applySearch($query);
+        $query = $this->commitApplySearch($query);
 
         return view('livewire.appointments', [
             'appointments' => $adminQuery->paginate(10),

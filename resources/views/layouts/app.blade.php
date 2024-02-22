@@ -21,6 +21,8 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
+{{--    <link rel="apple-touch-icon" href="{{ asset('logo.PNG') }}">--}}
+{{--    <link rel="manifest" href="{{ asset('/manifest.json') }}">--}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Styles -->
@@ -54,6 +56,24 @@
             background: #555;
         }
     </style>
+{{--    <script src="{{ asset('/sw.js') }}"></script>--}}
+{{--    <script>--}}
+{{--        if ("serviceWorker" in navigator) {--}}
+{{--            // Register a service worker hosted at the root of the--}}
+{{--            // site using the default scope.--}}
+{{--            navigator.serviceWorker.register("/sw.js").then(--}}
+{{--                (registration) => {--}}
+{{--                    console.log("Service worker registration succeeded:", registration);--}}
+{{--                },--}}
+{{--                (error) => {--}}
+{{--                    console.error(`Service worker registration failed: ${error}`);--}}
+{{--                },--}}
+{{--            );--}}
+{{--        } else {--}}
+{{--            console.error("Service workers are not supported.");--}}
+{{--        }--}}
+{{--    </script>--}}
+
 </head>
 <body class="font-sans antialiased">
 <x-banner />

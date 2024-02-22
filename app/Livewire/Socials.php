@@ -15,7 +15,6 @@ class Socials extends Component
     public $facebook;
     public $twitter;
     public $linkedin;
-
     public $showSocialsModal = false;
 
     public function rules(): array
@@ -62,13 +61,22 @@ class Socials extends Component
 
     public function save(): void
     {
+        $this->commitSave();
+    }
+
+    protected function commitSave(): void
+    {
         $this->authorize("save", $this->social);
         $this->validate();
+        $this->assignSocialProperties();
+        $this->showSocialsModal = false;
+        $this->dispatch('notify', 'Socials saved');
+    }
 
+    private function assignSocialProperties(): void
+    {
         $existingSocial = Social::where('user_id', auth()->user()->id)->first();
-
         if ($existingSocial) {
-            // If it exists, update the existing record
             $existingSocial->update([
                 'instagram' => $this->instagram,
                 'facebook' => $this->facebook,
@@ -76,7 +84,6 @@ class Socials extends Component
                 'linkedin' => $this->linkedin,
             ]);
         } else {
-            // If it doesn't exist, create a new record
             Social::create([
                 'user_id' => auth()->user()->id,
                 'instagram' => $this->instagram,
@@ -85,20 +92,20 @@ class Socials extends Component
                 'linkedin' => $this->linkedin,
             ]);
         }
-
-        $this->showSocialsModal = false;
-        $this->dispatch('notify', 'Socials saved');
     }
 
-
     public function edit($socialId): void
+    {
+        $this->commitEdit($socialId);
+    }
+
+    protected function commitEdit($socialId): void
     {
         $social = Social::find($socialId);
         $this->instagram = $social->instagram;
         $this->facebook = $social->facebook;
         $this->twitter = $social->twitter;
         $this->linkedin = $social->linkedin;
-
         $this->showSocialsModal = true;
     }
 
