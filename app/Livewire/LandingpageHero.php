@@ -3,10 +3,10 @@
 namespace App\Livewire;
 
 use App\Models\Hero;
+use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -16,54 +16,44 @@ class LandingpageHero extends Component
 {
     use withFileUploads;
 
-public $hero;
-
-public $mainQuote;
-public $secondaryQuote;
-public $thirdQuote;
-public $gradientDegree;
-public $gradientFirstColor;
-public $gradientDegreeStart;
-public $gradientSecondColor;
-public $gradientDegreeEnd;
-public $waves;
+    public Hero $hero;
+    public User $user;
     /**
      * @var true
      */
-public bool $showHeroModal;
-
-public $image;
+    public bool $showHeroModal;
+    public $image;
 
 
 
     protected function rules(): array
     {
         return [
-            "mainQuote" => ["required", "max:255", "string"],
-            "secondaryQuote" => ["nullable", "max:255", "string"],
-            "thirdQuote" => ["nullable", "max:255", "string"],
-            "gradientDegree" => ["required", "numeric"],
-            "gradientFirstColor" => ["required", "max:255", "string"],
-            "gradientDegreeStart" => ["required", "numeric"],
-            "gradientSecondColor" => ["required", "max:255", "string"],
-            "gradientDegreeEnd" => ["required", "numeric"],
-            "image" => ["nullable","sometimes","max:5120"],
-            "waves" => ["required", "bool"],
+            "hero.mainQuote" => ["required", "max:255", "string"],
+            "hero.secondaryQuote" => ["nullable", "max:255", "string"],
+            "hero.thirdQuote" => ["nullable", "max:255", "string"],
+            "hero.gradientDegree" => ["required", "max:90", "numeric"],
+            "hero.gradientFirstColor" => ["required", "max:255", "string"],
+            "hero.gradientDegreeStart" => ["required", "max:100", "numeric"],
+            "hero.gradientSecondColor" => ["required", "max:255", "string"],
+            "hero.gradientDegreeEnd" => ["required", "max:100", "numeric"],
+            "image" => ["nullable","image", "max:5120"],
+            "hero.waves" => ["required", "bool"],
         ];
     }
 
     public function messages(): array
     {
         return [
-            "mainQuote.required" => "The Main quote is required.",
-            "secondaryQuote.required" => "The Secondary quote is required.",
-            "thirdQuote.required" => "The Third quote is required.",
-            "gradientDegree.required" => "The Gradient degree is required.",
-            "gradientFirstColor.required" => "The Gradient first color is required.",
-            "gradientDegreeStart.required" => "The Gradient degree start is required.",
-            "gradientSecondColor.required" => "The Gradient second color is required.",
-            "gradientDegreeEnd.required" => "The Gradient degree end is required.",
-            "waves.required" => "The waves field is required.",
+            "hero.mainQuote.required" => "The Main quote is required.",
+            "hero.secondaryQuote.required" => "The Secondary quote is required.",
+            "hero.thirdQuote.required" => "The Third quote is required.",
+            "hero.gradientDegree.required" => "The Gradient degree is required.",
+            "hero.gradientFirstColor.required" => "The Gradient first color is required.",
+            "hero.gradientDegreeStart.required" => "The Gradient degree start is required.",
+            "hero.gradientSecondColor.required" => "The Gradient second color is required.",
+            "hero.gradientDegreeEnd.required" => "The Gradient degree end is required.",
+            "hero.waves.required" => "The waves field is required.",
             "image.image" => "The uploaded file must be an image.",
             "image.max" => "The image may not be greater than 5 Megabytes.",
         ];
@@ -72,7 +62,7 @@ public $image;
     public function mount(): void
     {
 
-        $this->hero = new Hero();
+        $this->hero = $this->makeBlankHero();
     }
 
     //Realtime validation
@@ -81,51 +71,32 @@ public $image;
         $this->validateOnly($propertyName);
     }
 
+    function makeBlankHero()
+    {
+        return Hero::make();
+    }
+
     public function editHero(Hero $hero): void
     {
+        if ($this->hero->isNot($hero)) {
             $this->hero = $hero;
-            $this->mainQuote = $hero->mainQuote;
-            $this->secondaryQuote = $hero->secondaryQuote;
-            $this->thirdQuote = $hero->thirdQuote;
-            $this->gradientDegree = $hero->gradientDegree;
-            $this->gradientFirstColor = $hero->gradientFirstColor;
-            $this->gradientDegreeStart = $hero->gradientDegreeStart;
-            $this->gradientSecondColor = $hero->gradientSecondColor;
-            $this->gradientDegreeEnd = $hero->gradientDegreeEnd;
-            $this->image = $hero->image;
-            $this->waves = $hero->waves;
-            $this->showHeroModal = true;
+        }
+        $this->showHeroModal = true;
     }
 
     #[On('saved')]
-//    public function save(): void
-//    {
-//        $this->commitSave();
-//    }
-
     public function save(): void
     {
-        $this->authorize("save", $this->hero);
         $this->validate();
         $user = auth()->user();
         $this->hero->user_id = $user->id;
-        $this->hero->mainQuote = $this->mainQuote;
-        $this->hero->secondaryQuote = $this->secondaryQuote;
-        $this->hero->thirdQuote = $this->thirdQuote;
-        $this->hero->gradientDegree = $this->gradientDegree;
-        $this->hero->gradientFirstColor = $this->gradientFirstColor;
-        $this->hero->gradientDegreeStart = $this->gradientDegreeStart;
-        $this->hero->gradientSecondColor = $this->gradientSecondColor;
-        $this->hero->gradientDegreeEnd = $this->gradientDegreeEnd;
-        $this->hero->waves = $this->waves;
-
         $newImageUploaded = false;
-        if ($this->image instanceof UploadedFile) {
+        if ($this->image) {
             // Delete the old image file
-            Storage::disk('s3-public')->delete($this->hero->image);
+            Storage::delete("heroImage/" . $this->hero->image);
 
             // Save the new image file
-            $filename = $this->image->store("heroImage", "s3-public");
+            $filename = $this->image->store("/", "heroImage");
             $this->hero->image = $filename;
 
             $newImageUploaded = true;
@@ -140,10 +111,10 @@ public $image;
         $this->dispatch("notify", "Saved!");
     }
 
-    public function render(): Factory|View|Application
+    public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('livewire.landingpage-hero', [
-            'heroes' => Hero::first(),
+            'heroes' => Hero::where("user_id", auth()->id())->get()
         ]);
     }
 }
