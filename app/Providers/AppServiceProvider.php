@@ -8,9 +8,7 @@ use App\Services\Newsletter;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
-use Livewire;
 use MailchimpMarketing\ApiClient;
-use Route;
 
 /**
  * @method where($field, string $string, string $string1)
@@ -38,9 +36,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Livewire::setScriptRoute(function ($handle) {
-            return Route::get('/custom/livewire/livewire-js', $handle);
-        });
         Builder::macro('search', function ($field, $string) {
             return $string ? $this->where($field, 'LIKE', '%'.$string.'%') : $this;
         });
