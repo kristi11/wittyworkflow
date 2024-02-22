@@ -20,8 +20,8 @@
     <meta name="keywords" content="" />
     <!-- PWA  -->
     <meta name="theme-color" content="#6777ef"/>
-    <link rel="apple-touch-icon" href="{{ asset('logo.PNG') }}">
-    <link rel="manifest" href="{{ asset('/manifest.json') }}">
+{{--    <link rel="apple-touch-icon" href="{{ asset('logo.PNG') }}">--}}
+{{--    <link rel="manifest" href="{{ asset('/manifest.json') }}">--}}
     <meta name="author" content="kristi tanellari" />
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
     <!--Replace with your tailwind.css once created-->
@@ -50,22 +50,22 @@
             },
         }
     </script>
-    <script src="{{ asset('/sw.js') }}"></script>
-    <script>
-        if ("serviceWorker" in navigator) {
-            // Register a service worker hosted at the root of the
-            // site using the default scope.
-            navigator.serviceWorker.register("/sw.js").then(
-                (registration) => {
-                    console.log("Service worker registration succeeded:", registration);
-                },
-                (error) => {
-                    console.error(`Service worker registration failed: ${error}`);
-                },
-            );
-        } else {
-            console.error("Service workers are not supported.");
-        }
-    </script>
+{{--    <script src="{{ asset('/sw.js') }}"></script>--}}
+{{--    <script>--}}
+{{--        if ("serviceWorker" in navigator) {--}}
+{{--            // Register a service worker hosted at the root of the--}}
+{{--            // site using the default scope.--}}
+{{--            navigator.serviceWorker.register("/sw.js").then(--}}
+{{--                (registration) => {--}}
+{{--                    console.log("Service worker registration succeeded:", registration);--}}
+{{--                },--}}
+{{--                (error) => {--}}
+{{--                    console.error(`Service worker registration failed: ${error}`);--}}
+{{--                },--}}
+{{--            );--}}
+{{--        } else {--}}
+{{--            console.error("Service workers are not supported.");--}}
+{{--        }--}}
+{{--    </script>--}}
 
 </head>
