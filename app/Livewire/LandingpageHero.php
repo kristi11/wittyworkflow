@@ -100,11 +100,6 @@ public $image;
     #[On('saved')]
     public function save(): void
     {
-        $this->commitSave();
-    }
-
-    protected function commitSave(): void
-    {
         $this->authorize("save", $this->hero);
         $this->validate();
         $user = auth()->user();
@@ -138,6 +133,11 @@ public $image;
         $this->hero->save();
         $this->showHeroModal = false;
         $this->dispatch("notify", "Saved!");
+    }
+
+    protected function commitSave(): void
+    {
+
     }
 
     public function render(): Factory|View|Application
