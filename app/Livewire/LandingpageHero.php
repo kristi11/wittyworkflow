@@ -16,23 +16,23 @@ class LandingpageHero extends Component
 {
     use withFileUploads;
 
-    public $hero;
+public $hero;
 
-    public $mainQuote;
-    public $secondaryQuote;
-    public $thirdQuote;
-    public $gradientDegree;
-    public $gradientFirstColor;
-    public $gradientDegreeStart;
-    public $gradientSecondColor;
-    public $gradientDegreeEnd;
-    public $waves;
+public $mainQuote;
+public $secondaryQuote;
+public $thirdQuote;
+public $gradientDegree;
+public $gradientFirstColor;
+public $gradientDegreeStart;
+public $gradientSecondColor;
+public $gradientDegreeEnd;
+public $waves;
     /**
      * @var true
      */
-    public bool $showHeroModal;
+public bool $showHeroModal;
 
-    public $image;
+public $image;
 
 
 
@@ -42,11 +42,11 @@ class LandingpageHero extends Component
             "mainQuote" => ["required", "max:255", "string"],
             "secondaryQuote" => ["nullable", "max:255", "string"],
             "thirdQuote" => ["nullable", "max:255", "string"],
-            "gradientDegree" => ["required", "max:90", "numeric"],
+            "gradientDegree" => ["required", "numeric"],
             "gradientFirstColor" => ["required", "max:255", "string"],
-            "gradientDegreeStart" => ["required", "max:100", "numeric"],
+            "gradientDegreeStart" => ["required", "numeric"],
             "gradientSecondColor" => ["required", "max:255", "string"],
-            "gradientDegreeEnd" => ["required", "max:100", "numeric"],
+            "gradientDegreeEnd" => ["required", "numeric"],
             "image" => ["nullable","sometimes","max:5120"],
             "waves" => ["required", "bool"],
         ];
@@ -83,22 +83,27 @@ class LandingpageHero extends Component
 
     public function editHero(Hero $hero): void
     {
-        $this->hero = $hero;
-        $this->mainQuote = $hero->mainQuote;
-        $this->secondaryQuote = $hero->secondaryQuote;
-        $this->thirdQuote = $hero->thirdQuote;
-        $this->gradientDegree = $hero->gradientDegree;
-        $this->gradientFirstColor = $hero->gradientFirstColor;
-        $this->gradientDegreeStart = $hero->gradientDegreeStart;
-        $this->gradientSecondColor = $hero->gradientSecondColor;
-        $this->gradientDegreeEnd = $hero->gradientDegreeEnd;
-        $this->image = $hero->image;
-        $this->waves = $hero->waves;
-        $this->showHeroModal = true;
+            $this->hero = $hero;
+            $this->mainQuote = $hero->mainQuote;
+            $this->secondaryQuote = $hero->secondaryQuote;
+            $this->thirdQuote = $hero->thirdQuote;
+            $this->gradientDegree = $hero->gradientDegree;
+            $this->gradientFirstColor = $hero->gradientFirstColor;
+            $this->gradientDegreeStart = $hero->gradientDegreeStart;
+            $this->gradientSecondColor = $hero->gradientSecondColor;
+            $this->gradientDegreeEnd = $hero->gradientDegreeEnd;
+            $this->image = $hero->image;
+            $this->waves = $hero->waves;
+            $this->showHeroModal = true;
     }
 
     #[On('saved')]
     public function save(): void
+    {
+        $this->commitSave();
+    }
+
+    protected function commitSave(): void
     {
         $this->authorize("save", $this->hero);
         $this->validate();
@@ -113,7 +118,6 @@ class LandingpageHero extends Component
         $this->hero->gradientSecondColor = $this->gradientSecondColor;
         $this->hero->gradientDegreeEnd = $this->gradientDegreeEnd;
         $this->hero->waves = $this->waves;
-
 
         $newImageUploaded = false;
         if ($this->image instanceof UploadedFile) {
