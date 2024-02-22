@@ -89,11 +89,6 @@ class Galleries extends Component
 
     public function save(): void
     {
-       $this->commitSave();
-    }
-
-    protected function commitSave(): void
-    {
         $this->authorize('save', $this->gallery);
         $this->editing = false;
 
