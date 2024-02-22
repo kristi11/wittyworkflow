@@ -16,9 +16,7 @@ class Addresses extends Component
     public $city;
     public $state;
     public $zip;
-
     public $phone;
-
     public $showAddressModal = false;
 
     protected $rules = [
@@ -32,7 +30,7 @@ class Addresses extends Component
 
     public function mount(Address $address): void
     {
-        $this->address = $address;
+        $this->loadAddress($address);
     }
 
     public function updated($propertyName): void
@@ -42,6 +40,27 @@ class Addresses extends Component
 
     public function editAddress(Address $address): void
     {
+        $this->loadAddress($address);
+        $this->showAddressModal = true;
+    }
+
+    public function save(): void
+    {
+        $this->commitSave();
+    }
+
+    protected function commitSave(): void
+    {
+        $this->authorize('save', $this->address);
+        $this->validateData();
+        $this->updateAddressData();
+        $this->saveAddress();
+        $this->showAddressModal = false;
+        $this->dispatch('notify', 'Address saved!');
+    }
+
+    protected function loadAddress(Address $address): void
+    {
         $this->address = $address;
         $this->name = $address->name;
         $this->street = $address->street;
@@ -49,19 +68,15 @@ class Addresses extends Component
         $this->state = $address->state;
         $this->zip = $address->zip;
         $this->phone = $address->phone;
-        $this->showAddressModal = true;
     }
 
-    public function save(): void
+    protected function validateData(): void
     {
-       $this->commitSave();
+        $this->validate($this->rules);
     }
 
-    protected function commitSave(): void
+    protected function updateAddressData(): void
     {
-        $this->authorize('save', $this->address);
-        $this->validate();
-
         $this->address->user_id = auth()->user()->id;
         $this->address->name = $this->name;
         $this->address->street = $this->street;
@@ -69,10 +84,11 @@ class Addresses extends Component
         $this->address->state = $this->state;
         $this->address->zip = $this->zip;
         $this->address->phone = $this->phone;
-        $this->address->save();
-        $this->showAddressModal = false;
+    }
 
-        $this->dispatch('notify', 'Address saved!');
+    protected function saveAddress(): void
+    {
+        $this->address->save();
     }
 
     public function render(): Factory|View|Application

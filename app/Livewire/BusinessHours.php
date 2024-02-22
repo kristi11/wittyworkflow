@@ -17,10 +17,8 @@ class BusinessHours extends Component
     public  $day;
     public  $open_from;
     public  $open_until;
-
     public $open = '';
     public $showBusinessHoursModal = false;
-
     public $alwaysOpen;
 
     public function rules(): array
@@ -56,8 +54,6 @@ class BusinessHours extends Component
 
         return $rules;
     }
-
-
 
     public function messages(): array
     {
@@ -98,13 +94,11 @@ class BusinessHours extends Component
             ['user_id' => 1],
             ['alwaysOpen' => $this->alwaysOpen],
         );
-
         $this->dispatch('notify', 'Always open status changed!');
     }
 
     public function edit(BusinessHour $businessHour): void
     {
-
         $this->businessHour = $businessHour;
         $this->day = $businessHour->day;
         $this->open_from = $businessHour->open_from;
@@ -116,6 +110,11 @@ class BusinessHours extends Component
 
     public function delete(BusinessHour $businessHour): void
     {
+       $this->commitDelete($businessHour);
+    }
+
+    protected function commitDelete(BusinessHour $businessHour): void
+    {
         $this->authorize('delete', $businessHour);
         BusinessHour::find($businessHour->id)->delete();
         $this->dispatch('notify', 'Business hour deleted');
@@ -126,27 +125,27 @@ class BusinessHours extends Component
         $this->businessHour = $this->makeBlankBusinessHours();
         $this->showBusinessHoursModal = true;
     }
-//
-//    public function toggle(): void
-//    {
-//           $this->open = !$this->open;
-//    }
 
     public function save(): void
+    {
+       $this->commitSave();
+    }
+
+    protected function commitSave(): void
     {
         $this->authorize('save', $this->businessHour);
         $this->validate();
         $this->businessHour->user_id = auth()->user()->id;
 
-        if (!$this->open) {
-            $this->businessHour->open = false;
-            $this->businessHour->open_from = null;
-            $this->businessHour->open_until = null;
-        } else {
-            $this->businessHour->open = true;
-            $this->businessHour->open_from = $this->open_from;
-            $this->businessHour->open_until = $this->open_until;
-        }
+            if (!$this->open) {
+                $this->businessHour->open = false;
+                $this->businessHour->open_from = null;
+                $this->businessHour->open_until = null;
+            } else {
+                $this->businessHour->open = true;
+                $this->businessHour->open_from = $this->open_from;
+                $this->businessHour->open_until = $this->open_until;
+            }
 
         $this->businessHour->day = $this->day;
         $this->businessHour->save();

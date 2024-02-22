@@ -38,12 +38,17 @@ class Seos extends Component
         $this->seo = $this->makeBlankSEO();
     }
 
-    public function makeBlankSEO()
+    protected function makeBlankSEO()
     {
         return Seo::make([]);
     }
 
     public function save(): void
+    {
+        $this->commitSave();
+    }
+
+    protected function commitSave(): void
     {
         $this->authorize("save", $this->seo);
         $this->validate();
@@ -64,6 +69,11 @@ class Seos extends Component
 
     public function edit(Seo $seo): void
     {
+       $this->commitEdit($seo);
+    }
+
+    protected function commitEdit(Seo $seo): void
+    {
         if ($this->seo->isNot($seo)) {
             $this->seo = $seo;
             $this->title = $seo->title;
@@ -74,8 +84,12 @@ class Seos extends Component
 
     public function delete(Seo $seo): void
     {
+        $this->commitDelete($seo);
+    }
+
+    protected function commitDelete(Seo $seo): void
+    {
         $this->authorize("delete", $seo);
-        // Delete the Seo model instance
         $seo->delete();
         $this->dispatch("notify", "SEO deleted!");
         $this->reset();

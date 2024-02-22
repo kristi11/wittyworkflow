@@ -89,17 +89,30 @@ class Galleries extends Component
 
     public function save(): void
     {
+        $this->commitSave();
+    }
+
+    protected function commitSave(): void
+    {
         $this->authorize('save', $this->gallery);
-        $this->editing = false;
-
         $this->validate();
-        $admin = auth()->user();
+        $this->assignGalleryProperties();
+        $this->handleImageUpload();
+        $this->gallery->save();
+        $this->showGalleryModal = false;
+        $this->dispatch('notify', 'Image saved');
+    }
 
-        $this->gallery->user_id = $admin->id;
+    private function assignGalleryProperties(): void
+    {
+        $user = auth()->user();
+        $this->gallery->user()->associate($user);
         $this->gallery->applied_to = $this->applied_to;
         $this->gallery->description = $this->description;
+    }
 
-        $newImageUploaded = false;
+    private function handleImageUpload(): void
+    {
         if ($this->path instanceof UploadedFile) {
             // Delete the old image file if it exists
             if ($this->gallery->path) {
@@ -109,21 +122,59 @@ class Galleries extends Component
             // Save the new image file
             $filename = $this->path->store("serviceImages", "s3-public");
             $this->gallery->path = $filename;
-
-            $newImageUploaded = true;
-        }
-
-        if (!$newImageUploaded && $this->gallery->getOriginal("path")) {
+        } elseif ($this->gallery->getOriginal("path")) {
             // If no new image was uploaded and the original model has an image, retain the original path
             $this->gallery->path = $this->gallery->getOriginal("path");
         }
-
-        $this->gallery->save();
-        $this->showGalleryModal = false;
-        $this->dispatch('notify', 'Image saved');
     }
 
+//    public function save(): void
+//    {
+//       $this->commitSave();
+//    }
+//
+//    protected function commitSave(): void
+//    {
+//        $this->authorize('save', $this->gallery);
+//        $this->editing = false;
+//
+//        $this->validate();
+//        $admin = auth()->user();
+//
+//        $this->gallery->user_id = $admin->id;
+//        $this->gallery->applied_to = $this->applied_to;
+//        $this->gallery->description = $this->description;
+//
+//        $newImageUploaded = false;
+//        if ($this->path instanceof UploadedFile) {
+//            // Delete the old image file if it exists
+//            if ($this->gallery->path) {
+//                Storage::disk('s3-public')->delete($this->gallery->path);
+//            }
+//
+//            // Save the new image file
+//            $filename = $this->path->store("serviceImages", "s3-public");
+//            $this->gallery->path = $filename;
+//
+//            $newImageUploaded = true;
+//        }
+//
+//        if (!$newImageUploaded && $this->gallery->getOriginal("path")) {
+//            // If no new image was uploaded and the original model has an image, retain the original path
+//            $this->gallery->path = $this->gallery->getOriginal("path");
+//        }
+//
+//        $this->gallery->save();
+//        $this->showGalleryModal = false;
+//        $this->dispatch('notify', 'Image saved');
+//    }
+
     public function delete(Gallery $gallery): void
+    {
+       $this->commitDelete($gallery);
+    }
+
+    protected function commitDelete(Gallery $gallery): void
     {
         $this->authorize('delete', $gallery);
         $gallery->delete();
@@ -131,12 +182,6 @@ class Galleries extends Component
         $this->showGalleryModal = false;
         $this->dispatch('notify', 'Image deleted');
     }
-
-//    public function placeholder(): Factory|View|Application
-//    {
-//        return view('placeholder');
-//    }
-
     public function render(): Factory|View|Application
     {
         return view('livewire.galleries', [
