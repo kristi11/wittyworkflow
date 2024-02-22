@@ -100,6 +100,11 @@ public $image;
     #[On('saved')]
     public function save(): void
     {
+        $this->commitSave();
+    }
+
+    protected function commitSave(): void
+    {
         $this->authorize("save", $this->hero);
         $this->validate();
         $user = auth()->user();
@@ -115,7 +120,7 @@ public $image;
         $this->hero->waves = $this->waves;
 
         $newImageUploaded = false;
-        if ($this->image instanceof UploadedFile) {
+        if ($this->image) {
             // Delete the old image file
             Storage::disk('s3-public')->delete($this->hero->image);
 
@@ -133,11 +138,6 @@ public $image;
         $this->hero->save();
         $this->showHeroModal = false;
         $this->dispatch("notify", "Saved!");
-    }
-
-    protected function commitSave(): void
-    {
-
     }
 
     public function render(): Factory|View|Application
